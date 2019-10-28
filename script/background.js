@@ -9,7 +9,9 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
       }
       case "GET Request":
       {
-         $.get(req.requestUrl, data => {sendResponse(data)});
+         $.get(req.requestUrl, data => {
+            sendResponse(data);
+         });
          break;
       }
    }

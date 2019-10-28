@@ -11,14 +11,6 @@ var vi,
 const caption = ".captions-display--captions-container--1-aQJ"
 direct_sub_node = '.captions-display--captions-cue-text--ECkJu';
 
-function sendMessagePromise(request) {
-    return new Promise((resolve, reject) => {
-      chrome.runtime.sendMessage(request, res => {
-          resolve(res);
-      });
-   });
-}
-
 async function initData() {
    vi = [];
    eng = [];
@@ -90,7 +82,7 @@ function parseSub(data) {
          result.push(cut[2].trim());
       } catch (e) {
          result.push("");
-      } 
+      }
    });
    return result;
 }
@@ -133,12 +125,8 @@ function pageLoad(code) {
    $("button[aria-label=\"Pause\"]").trigger("click");
    startObserver();
    if (code === 200) {
-      chrome.storage.sync.get(['modeSubtitle'], function(result) {
-         let subtitleMode = result.modeSubtitle;
-         if (subtitleMode === undefined) {
-            subtitleMode = "1";
-         }
-
+      getSettingData().then(res => {
+         let subtitleMode = res.modeSubtitle;
          if (subtitleMode === "1") {
             $.alert({
                icon: '',
@@ -151,7 +139,7 @@ function pageLoad(code) {
                   vi: {
                      text: 'Vietnamese',
                      action: function() {
-                        start(1);
+                        start(1, res.float);
                         changeSubtitle();
                         setActiveButton(viBtn);
                      }
@@ -159,7 +147,7 @@ function pageLoad(code) {
                   eng: {
                      text: 'English',
                      action: function() {
-                        start(2);
+                        start(2, res.float);
                         changeSubtitle();
                         setActiveButton(engBtn);
                      }
@@ -173,7 +161,7 @@ function pageLoad(code) {
                }
             });
          } else if (subtitleMode === "0") {
-            start(1);
+            start(1, res.float);
          } else if (subtitleMode === "2") {
             setActiveButton(offBtn);
          }
@@ -181,7 +169,7 @@ function pageLoad(code) {
    }
 }
 
-function start(type) {
+function start(type, float) {
    mode = type;
    // Add Subtitle Button
    button.insertAfter("button[aria-label=\"Captions\"]");
@@ -198,6 +186,7 @@ function start(type) {
 
    turnSubtitleOn();
    changeSubtitle();
+   if(float) initMenuComponents();
 }
 
 function changeSubtitle() {

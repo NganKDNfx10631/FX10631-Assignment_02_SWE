@@ -1,7 +1,13 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-initComponents();
+var tabQuery =
+{
+   "active" : true,
+   "currentWindow": true
+};
+$(document).ready(function() {
+   initComponents();
+   updateUI();
+   addEvent();
+});
 
 /*Dropdown Menu*/
 function initComponents(){
@@ -33,15 +39,6 @@ function initComponents(){
          rel: defaultselectbox.children('option').eq(i).val()
       }).appendTo(cusList);
    }
-
-	chrome.storage.sync.get(['modeSubtitle'], async function(result) {
-		let subtitleMode = result.modeSubtitle;
-		if(subtitleMode === undefined)
-		{
-			subtitleMode = "1";
-		}
-		$('.selectLabel').text($($("option")[subtitleMode]).text());
-	});
 
    // open-list and close-list items functions
    function openList() {
@@ -80,9 +77,53 @@ function initComponents(){
 		let text = $(this).text();
 		$('.selectLabel').text(text);
 		defaultselectbox.val(text);
-		let mode =  $(this).attr("tabindex")
-		await chrome.storage.sync.set({modeSubtitle:mode}, function() {});
+		let mode =  $(this).attr("tabindex");
+      updateSetting('modeSubtitle', mode);
+		// await chrome.storage.sync.set({modeSubtitle:mode}, function() {});
    });
+}
+
+function updateSetting(name, data) {
+   getSettingData()
+   .then(res => {
+      res[name] = data;
+      chrome.storage.sync.set({funixPassportSetting:res}, function() {});
+   })
+}
+
+function updateUI() {
+   getSettingData().then(res => {
+		$('.selectLabel').text($($("option")[res.modeSubtitle]).text());
+      if(res.float)
+      {
+         $("#floating #toggle-on").prop('checked',true);
+      } else $("#floating #toggle-off").prop('checked',true);
+   });
+}
+
+function addEvent() {
+   $($("#floating label")[0]).click(function(event) {
+      updateSetting("float", true);
+   });
+   $($("#floating label")[1]).click(function(event) {
+      updateSetting("float", false);
+   });
+}
+
+function getSettingData() {
+   return new Promise((resolve, reject) => {
+      chrome.storage.sync.get(['funixPassportSetting'], function(result) {
+         if(result.funixPassportSetting === undefined)
+         {
+            resolve({
+               modeSubtitle: "1",
+               float: true
+            });
+         } else {
+            resolve(result.funixPassportSetting);
+         }
+     });
+  });
 }
 
 function focusItems() {

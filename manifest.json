@@ -9,12 +9,17 @@
       {
          "js": [
              "script/libary/jquery.js",
+             "script/getData.js",
              "script/libary/jquery-confirm.min.js",
+             "script/report.js",
+             "script/menu.js",
              "script/funix-translator.js",
-             "script/main.js"
+             "script/notifycation.js"
           ],
           "css": [
-             "style/jquery-confirm.min.css"
+             "style/jquery-confirm.min.css",
+             "style/menu.css",
+             "style/report.css"
           ],
          "matches": [
             "http://*/*",
@@ -37,22 +42,22 @@
          "run_at": "document_end"
       }
    ],
-   "description": "This utility helps FUNiX students for learning online, ex: Vietnamese translation for course materials, highlight video's subtitles.",
-   "icons": {
-      "32": "icon/funix-passport-icon-32x32.png",
-      "64": "icon/funix-passport-icon-64x64.png",
-      "128": "icon/funix-passport-icon-128x128.png"
-   },
    "background": {
       "scripts": [
          "script/libary/jquery.js",
          "script/background.js"
       ]
    },
+   "description": "This utility helps FUNiX students for learning online, ex: Vietnamese translation for course materials, highlight video's subtitles.",
+   "icons": {
+      "32": "icon/funix-passport-icon-32x32.png",
+      "64": "icon/funix-passport-icon-64x64.png",
+      "128": "icon/funix-passport-icon-128x128.png"
+   },
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoQZDBBra2X8pb87VP2pFSRKFsbh0lBoo/pvahfUt9dAQJSYYroBIOi3YJ+56CQpYsA/JXyk02/MG0QdeHESfntYQ7XPX8VwgKIyrLE2aCSSg/EfxqYDoLUeMVmhoH0hMac7GInuxEL2ELPa0kpENdFK/xMdGtcfXhaw1CuheATDcice2E55ojI2jZCdj5t/DrIB9O+k0P3sX0hF+qh9+3sMjAmkA1JfcZarsc5Sojhdk7T3TJSULCJXvXEafFF+ZnYEEkDpEbXQfM3mFSFQnl55vEWAjN2E30cTC+jrbhTXvVe9c0/MOo5jzur8/kG+2lRjQUGDo2E4T8jej3kl0JQIDAQAB",
    "manifest_version": 2,
    "name": "FUNiX Passport",
    "permissions": [ "tabs", "http://*/*", "https://*/*", "storage" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.3.4"
+   "version": "2.4.0"
 }

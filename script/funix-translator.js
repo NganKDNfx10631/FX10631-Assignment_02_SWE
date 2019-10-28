@@ -1,42 +1,49 @@
-var snippets;
-function init() {
-	console.log("obj");
-	let agrs = {
-			url: "https://pp.funix.edu.vn/funix-passport/get_translation.php",
-			//url: "http://localhost:3788/funix-translate/get_translation.php",
-			type: "POST",
-			cache: false,
-			dataType: 'text',
-			data: {
-				'url': encodeURIComponent(window.location.href)
-			}
-	};
-
-	$.ajax(agrs).then(response => {
-		snippets = JSON.parse(response);
-		if(snippets.length > 0)
-		{
-			gotData(snippets);
-		}
-	});
-}
+var addEventReload = false; // Check if add click event to reload
 
 $(document).ready(function() {
-	$("#sequence-list").click(function(event) {
-		init();
-	});
 	init();
 });
 
-function gotData(snippets) {
-	 chrome.storage.sync.get(['modeSubtitle'], async function(result) {
-	   let subtitleMode = result.modeSubtitle;
+function getIndex(domSelector, activeClass) {
+   let list = $(domSelector);
+   for(let i = 0; i < list.length; i++)
+   {
+      if($(list[i]).hasClass(activeClass)) return i;
+   }
+   return -1;
+}
 
-      if(subtitleMode === undefined)
-   	{
-   		subtitleMode = "1";
-   	};
+function init() {
+	let request = {
+      content: "POST Request",
+      requestUrl: "https://funix-onpage-translator.firebaseapp.com/get-data",
+      requestBody: {
+         id: encodeURIComponent(window.location.href)
+      }
+   };
+	if(window.location.href.match("courses.edx.org/*"))
+	{
+		let index = getIndex("#sequence-list > li > button", "active");
+		request.requestBody.id = encodeURIComponent(window.location.href + "?page=" + index);
+	}
+   chrome.runtime.sendMessage(request, res => {
+		if(res.code === 200)
+		{
+			gotData(res.data);
+			if(res.data.selector.reload && !addEventReload)
+			{
+				$(res.data.selector.reloadSelector).click(function(event) {
+					init();
+				});
+				addEventReload = true;
+			}
+		}
+   });
+}
 
+function gotData(data) {
+	getSettingData().then(res => {
+		let subtitleMode = res.modeSubtitle;
       if(subtitleMode === "1")
    	{
    		$.alert({
@@ -49,7 +56,7 @@ function gotData(snippets) {
    			buttons: {
    				Yes: {
    					action: function() {
-   						render(snippets);
+   						render(data, res.float);
    					}
    				},
    				No: {
@@ -59,94 +66,49 @@ function gotData(snippets) {
    		});
    	} else if(subtitleMode === "0")
    	{
-   		render(snippets);
+   		render(data, res.float);
    	}
 	});
 }
 
-function render(snippets) {
-	if($(".video-wrapper").length === 0)
+function render(data, float) {
+	let request = {
+      content: "GET Request",
+      requestUrl: data.link
+   };
+   chrome.runtime.sendMessage(request, res => {
+		// For cousera
+		if(window.location.href.match("courses.edx.org/*"))
+		{
+			let video = null;
+			let videoList = $(".tc-wrapper");
+			if(videoList.length > 0) video = videoList[0];
+			$(data.selector.selector).html(res);
+			renderTranscriptEdx(res, video);
+		} else {
+			$(data.selector.selector).html(res);
+		}
+   });
+	if(float) initMenuComponents();
+}
+
+function renderTranscriptEdx(res, video) {
+
+	if(video !== null)
 	{
-		renderHTML(snippets);
+		let dom = $($.parseHTML(res));
+		let element = null;
+		for(let i = 0; i < dom.length; i++)
+		{
+			if($(dom[i]).find(".tc-wrapper").length > 0)
+			{
+				element = dom[i];
+				break;
+			}
+		}
+		let subtitle = $($(element).find("ol.subtitles-menu"));
+		$(".tc-wrapper").html("");
+		$($(".tc-wrapper").parent()).html(video);
+		$("ol.subtitles-menu").html(subtitle.html());
 	}
-	else renderTranscript(snippets);
-}
-
-function renderTranscript(snippets) {
-	if($("ol.subtitles-menu > li").length > 0) renderHTML(snippets)
-	else{
-		setTimeout(function(){
-			renderTranscript(snippets);
-		}, 500);
-	}
-}
-
-function renderHTML(snippets)
-{
-	// Find all content block that contain a term
-	//+	var replaced = $("body").html();
-	//replaced = encodeURIComponent(replaced);
-	//console.log(replaced);
-
-	// Decode text
-	for (i = 0; i < snippets.length; i++) {
-	  // Eliminate carriage return characters for mismatch between these chars in HTML and in DB
-	  snippets[i].original = snippets[i].original.replace(/[\r\n]/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, " ");
-	  snippets[i].translated = snippets[i].translated.replace(/[\r\n]/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, " ");
-	}
-
-	// sort elements in snippets by text length, descding order
-	snippets.sort(function(a, b){return b.original.length-a.original.length;});
-
-
-	var rootnode=document.body;
-	var walker=document.createTreeWalker(rootnode, NodeFilter.SHOW_FRAGMENT, null, false)
-	do {
-	  // only get only text nodes, not get script nodes
-      var currentNode = walker.currentNode;
-      if (currentNode.nodeType == 3 & currentNode.parentNode.nodeName !== 'SCRIPT') {
-        // clean empty spaces including carriage return
-		value = currentNode.nodeValue.replace(/[\n\r]*/g,'').replace(/\t/g, ' ').replace(/&nbsp;/g, " ").replace(/\s+/g, ' ');
-
-		// console.log("cleaned original: [" + value + "]");
-
-        if (value != "") {
-	      for (i = 0; i < snippets.length; i++) {
-			// console.log("db original: [" + snippets[i].original + "]");
-		/*
-		var ele = $(document).xpath(decodeURIComponent(snippets[i].xpath));
-		ele.html(decodeURIComponent(snippets[i].translated));
-		alert(decodeURIComponent(snippets[i].xpath));
-		$(ele).attr('xindex', i);
-		$(ele).attr('xlang', 'vi');
-		*/
-		// console.log("|" + value + "|");
-
-			originalValue = snippets[i].original.replace(/[\n\r]*/g,'').replace(/\t/g, ' ').replace(/&nbsp;/g, " ").replace(/\s+/g, ' ');
-		    if (value.includes(originalValue) && value.length === originalValue.length) {
-			  currentNode.nodeValue = snippets[i].translated;
-			  break;
-		    }
-
-		/*
-			$(currentNode).click(function(){
-				var index = $(this).attr('xindex');
-				if (typeof index !== typeof undefined && index !== false) {
-					if ($(this).attr('xlang') == 'vi') {
-						$(this).text(snippets[index].original);
-						$(this).attr('xlang', 'en');
-					} else {
-						$(this).text(snippets[index].translated);
-						$(this).attr('xlang', 'vi');
-					}
-				}
-			});
-		*/
-	      }
-	    }
-      }
-    } while (walker.nextNode());
-
-	//+replaced = decodeURIComponent(replaced);
-	//+$("body").html(replaced);
 }

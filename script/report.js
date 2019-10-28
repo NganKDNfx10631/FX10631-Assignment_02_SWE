@@ -1,0 +1,49 @@
+chrome.runtime.onMessage.addListener(function(req){
+   switch (req) {
+      case "report":{
+         reportIssue()
+         break;
+      }
+   }
+});
+
+function reportIssue() {
+   $.confirm(creatPrompt(function() {
+      return postReport(this);
+   }));
+}
+
+function postReport(self) {
+   let data = {};
+   data.name = self.$content.find('#name').val();
+   data.email = self.$content.find('#email').val();
+   data.message = self.$content.find('#message').val();
+
+   // Validate
+   if(data.name === "" || data.email === "" || data.message === "")
+   {
+      notify("Fill all information!");
+      return false;
+   }
+   data.date = (new Date()).toLocaleDateString("vi");
+   data.url = window.location.href;
+   let report = {
+      id: (new Date()).getTime() + "",
+      data: data
+   };
+
+   $.alert(creatLoadingAjax(function() {
+      var self = this;
+      self.showLoading(true);
+      let request = {
+         content: "POST Request",
+         requestUrl: "https://funix-onpage-translator.firebaseapp.com/add-ticket",
+         requestBody: report
+      };
+      chrome.runtime.sendMessage(request, res => {
+         if(res.code === 200) self.setContent("Thanks for report!");
+         else self.setContent("Can't send report! Try again :(");
+         self.hideLoading(true);
+      });
+   }));
+}
