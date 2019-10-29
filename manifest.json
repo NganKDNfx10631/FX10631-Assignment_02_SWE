@@ -13,7 +13,8 @@
              "script/libary/jquery-confirm.min.js",
              "script/report.js",
              "script/menu.js",
-             "script/funix-translator.js",
+             "script/translate/old_translator.js",
+             "script/translate/funix-translator.js",
              "script/notifycation.js"
           ],
           "css": [

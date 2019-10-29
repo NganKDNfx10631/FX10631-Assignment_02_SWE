@@ -25,7 +25,7 @@ function initMenuComponents() {
          "https://use.fontawesome.com/releases/v5.7.1/css/all.css"
       );
       head.appendChild(style);
-      let menuHTML = '<div id="floatFunixMenu"> <div id="toggle"> <img id="plus" src="https://firebasestorage.googleapis.com/v0/b/funix-subtitle.appspot.com/o/funix-icon.png?alt=media&token=d87f1917-86c3-4359-b771-6c8768627e1c" alt=""> </div> <div id="menu"> <a id = "report" class="FunixTooltip"> <span class="fa fa-flag" aria-hidden="true"></span> <span class="FunixTooltiptext">Report some issue!</span> </a> </div> </div>';
+      let menuHTML = '<div id="floatFunixMenu"> <div id="toggle"> <img id="plus" src="https://firebasestorage.googleapis.com/v0/b/funix-subtitle.appspot.com/o/funix-icon.png?alt=media&token=d87f1917-86c3-4359-b771-6c8768627e1c" alt=""> </div> <div id="menu"> <a id="report" class="FunixTooltip"> <span class="fa fa-flag" aria-hidden="true"></span> <span class="FunixTooltiptext">Report some issue!</span> </a> <a class="FunixTooltip"  href="https://lms.funix.edu.vn" target="_blank"> <span class="fas fa-graduation-cap" aria-hidden="true"></span> <span class="FunixTooltiptext">Go to LMS</span> </a> <a class="FunixTooltip"  href="https://www.messenger.com/t/hannah.funix" target="_blank"> <span class="far fa-comment-dots aria-hidden="true"></span> <span class="FunixTooltiptext">Ask mentor</span> </a> </div> </div>';
       $("body").append(menuHTML);
 
       // Get element

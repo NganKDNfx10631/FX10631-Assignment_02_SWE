@@ -37,6 +37,8 @@ function init() {
 				});
 				addEventReload = true;
 			}
+		} else{
+			initOldTranlate();
 		}
    });
 }
