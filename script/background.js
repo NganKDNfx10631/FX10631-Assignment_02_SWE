@@ -1,3 +1,7 @@
+const TIME_REFRESH_DOMAIN = 86400000; // 1 day
+
+refreshDomainList();
+
 chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
    switch (req.content) {
       case "POST Request":
@@ -19,3 +23,14 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
    }
    return true;
 });
+
+function refreshDomainList()
+{
+   $.post("http://localhost:5000/get-all-selector", res => {
+      chrome.storage.sync.set({domainList: res}, function() {
+         setTimeout(function(){
+            refreshDomainList();
+         }, TIME_REFRESH_DOMAIN);
+      });
+   });
+}
