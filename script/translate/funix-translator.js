@@ -27,7 +27,11 @@ function init() {
 		request.requestBody.id = encodeURIComponent(window.location.href + "?page=" + index);
 	}
    chrome.runtime.sendMessage(request, res => {
-		if(res.code === 200)
+		if(res === null)
+		{
+			initOldTranlate();
+		}
+		else if(res.code === 200)
 		{
 			gotData(res.data);
 			if(res.data.selector.reload && !addEventReload)

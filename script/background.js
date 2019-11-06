@@ -4,6 +4,8 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
       {
          $.post(req.requestUrl, req.requestBody, data => {
             sendResponse(data);
+         }).catch(err => {
+            sendResponse(undefined);
          });
          break;
       }

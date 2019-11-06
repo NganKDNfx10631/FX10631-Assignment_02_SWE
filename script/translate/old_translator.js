@@ -1,6 +1,5 @@
 var snippets;
 function initOld() {
-	console.log("obj");
 	let agrs = {
 			url: "https://pp.funix.edu.vn/funix-passport/get_translation.php",
 			//url: "http://localhost:3788/funix-translate/get_translation.php",
