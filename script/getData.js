@@ -21,3 +21,11 @@ function getSettingData() {
      });
   });
 }
+
+function getDomainList() {
+   return new Promise((resolve, reject) => {
+      chrome.storage.sync.get(['domainList'], function(result) {
+         resolve(result.domainList);
+     });
+  });
+}

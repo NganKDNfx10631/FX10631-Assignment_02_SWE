@@ -1,8 +1,16 @@
 var addEventReload = false; // Check if add click event to reload
 
 $(document).ready(function() {
-	init();
+	checkDomain();
 });
+
+function checkDomain(){
+	let hostname = window.location.hostname;
+	getDomainList().then(res => {
+		if(res[hostname] !== undefined) init();
+		else initOldTranlate();
+	});
+}
 
 function getIndex(domSelector, activeClass) {
    let list = $(domSelector);
@@ -14,9 +22,10 @@ function getIndex(domSelector, activeClass) {
 }
 
 function init() {
+
 	let request = {
       content: "POST Request",
-      requestUrl: "https://funix-onpage-translator.firebaseapp.com/get-data",
+      requestUrl: "https://funix-onpage.firebaseapp.com/get-data",
       requestBody: {
          id: encodeURIComponent(window.location.href)
       }
