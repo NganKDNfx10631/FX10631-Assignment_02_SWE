@@ -26,8 +26,9 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
 
 function refreshDomainList()
 {
-   $.post("https://funix-onpage.firebaseapp.com/get-all-selector", res => {
+   $.post("https://translation.funix.edu.vn/get-all-selector", res => {
       chrome.storage.sync.set({domainList: res}, function() {
+         console.log(res);
          setTimeout(function(){
             refreshDomainList();
          }, TIME_REFRESH_DOMAIN);

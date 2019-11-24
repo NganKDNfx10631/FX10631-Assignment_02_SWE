@@ -68,6 +68,7 @@ async function initData() {
          dictVi[base[i]] = vi[i];
          dictEng[base[i]] = eng[i];
       }
+      console.log(dictVi);
    }
    return resAPI.code;
 }
@@ -176,12 +177,12 @@ function start(type, float) {
 
    // Change Transcript when user open
    $("[aria-label=\"Transcript\"]").parent().parent().click(function() {
-      if (mode === 1) changeTranscript(vi);
-      else if (mode === 2) changeTranscript(eng);
+      if (mode === 1) changeTranscript(dictVi);
+      else if (mode === 2) changeTranscript(dictEng);
    });
    // Change transcript if is exit when user open page
    if ($(".transcript--cue-container--wu3UY").length > 0) {
-      changeTranscript(vi);
+      changeTranscript(dictVi);
    }
 
    turnSubtitleOn();
@@ -235,9 +236,10 @@ function changeTranscript(tranList) {
       let container = $(".transcript--cue-container--wu3UY > p > span");
       if (container.length > 0) {
          $.each(container, function(index, value) {
-            let text = tranList[index];
-            if (text !== undefined) {
-               $(value).text(text);
+            let text = $(value).text();
+            let tranText = tranList[text];
+            if (tranText !== undefined) {
+               $(value).text(tranText);
             }
          });
       }
@@ -272,7 +274,7 @@ function initButton() {
       mode = 1;
       changeSubtitle();
       if ($(".transcript--cue-container--wu3UY").length > 0) {
-         changeTranscript(vi);
+         changeTranscript(dictVi);
       }
    });
 
@@ -283,7 +285,7 @@ function initButton() {
       mode = 2;
       changeSubtitle();
       if ($(".transcript--cue-container--wu3UY").length > 0) {
-         changeTranscript(eng);
+         changeTranscript(dictEng);
       }
    });
 

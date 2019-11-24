@@ -22,10 +22,9 @@ function getIndex(domSelector, activeClass) {
 }
 
 function init() {
-
 	let request = {
       content: "POST Request",
-      requestUrl: "https://funix-onpage.firebaseapp.com/get-data",
+      requestUrl: "https://translation.funix.edu.vn/get-data",
       requestBody: {
          id: encodeURIComponent(window.location.href)
       }
