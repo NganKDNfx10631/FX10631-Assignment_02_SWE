@@ -33,7 +33,8 @@
          "js": [
             "script/libary/jquery.js",
             "script/libary/jquery-confirm.min.js",
-            "script/subtitle.js"
+            "script/subtitle/subtitleObserver.js",
+            "script/subtitle/udemy-subtitle.js"
          ],
          "css": [
             "style/style.css",

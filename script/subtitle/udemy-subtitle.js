@@ -68,7 +68,6 @@ async function initData() {
          dictVi[base[i]] = vi[i];
          dictEng[base[i]] = eng[i];
       }
-      console.log(dictVi);
    }
    return resAPI.code;
 }
@@ -104,9 +103,7 @@ function initComponents() {
    initButton();
 
    //Observe the paragraph
-   subtitleObserver = new MutationObserver(function(mutations) {
-      changeSubtitle();
-   }.bind(this));
+   subtitleObserver = new subtitleObserver(changeSubtitle);
 
    // reload subtitle when user change lesson.
    videoObserver = new MutationObserver(function(mutations) {
@@ -216,15 +213,11 @@ function changeSubtitle() {
 function startObserver() {
    try {
       captionContainer = $(caption).get(0);
-      subtitleObserver.observe(captionContainer, {
-         subtree: true,
-         childList: true,
-         characterData: true
-      });
+      subtitleObserver.startObserver(captionContainer);
       videoObserver.observe($("video").get(0), {
          attributes: true
       });
-   } catch {
+   } catch(err) {
       setTimeout(function() {
          startObserver();
       }, 500);
