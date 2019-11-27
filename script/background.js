@@ -1,7 +1,3 @@
-const TIME_REFRESH_DOMAIN = 86400000; // 1 day
-
-refreshDomainList();
-
 chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
    switch (req.content) {
       case "POST Request":
@@ -23,15 +19,3 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
    }
    return true;
 });
-
-function refreshDomainList()
-{
-   $.post("https://translation.funix.edu.vn/get-all-selector", res => {
-      chrome.storage.sync.set({domainList: res}, function() {
-         console.log(res);
-         setTimeout(function(){
-            refreshDomainList();
-         }, TIME_REFRESH_DOMAIN);
-      });
-   });
-}
