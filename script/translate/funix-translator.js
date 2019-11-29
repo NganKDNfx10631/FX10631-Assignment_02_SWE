@@ -74,7 +74,9 @@ function gotData(data) {
    					}
    				},
    				No: {
-   					action: function() {}
+   					action: function() {
+
+						}
    				}
    			}
    		});
@@ -102,6 +104,7 @@ function render(data, float) {
 		} else {
 			$(data.selector.selector).html(res);
 		}
+
    });
 	if(float) initMenuComponents();
 }

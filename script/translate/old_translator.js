@@ -16,6 +16,8 @@ function initOld() {
 		if(snippets.length > 0)
 		{
 			gotDataOld(snippets);
+		} else {
+
 		}
 	});
 }
@@ -43,10 +45,13 @@ function gotDataOld(snippets) {
    				Yes: {
    					action: function() {
    						renderOld(snippets, res.float);
+
    					}
    				},
    				No: {
-   					action: function() {}
+   					action: function() {
+
+						}
    				}
    			}
    		});

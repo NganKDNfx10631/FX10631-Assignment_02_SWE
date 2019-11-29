@@ -1,11 +1,8 @@
-var dictEng, dictVi, currentDict, // HashMap store sub data
-   mode,
-   videoObserver, subtitleObserver,
+let videoObserver, udemySubtitleObserver,
    button, iconBtn, viBtn, engBtn, offBtn,
-   oldSubtitle,
    enable, // Check if Extension is enable
    pathname = window.location.pathname;
-var vi,
+let vi,
    eng,
    base;
 const caption = ".captions-display--captions-container--1-aQJ"
@@ -14,8 +11,6 @@ direct_sub_node = '.captions-display--captions-cue-text--ECkJu';
 async function initData() {
    vi = [];
    eng = [];
-   dictVi = Object.create(null);
-   dictEng = Object.create(null);
    // Get data
    let params = window.location.pathname.split("/");
    let body = {};
@@ -47,50 +42,31 @@ async function initData() {
          content: "GET Request",
          requestUrl: resAPI.data.en,
       }).then(data => {
-         eng = parseSub(data);
+         eng = SubtitleHandling.parseSub(data);
       });
       // Get Viet sub
       await sendMessagePromise({
          content: "GET Request",
          requestUrl: resAPI.data.vi,
       }).then(data => {
-         vi = parseSub(data);
+         vi = SubtitleHandling.parseSub(data);
       });
       // Get base sub
       await sendMessagePromise({
          content: "GET Request",
          requestUrl: resAPI.data.bs,
       }).then(data => {
-         base = parseSub(data);
+         base = SubtitleHandling.parseSub(data);
       });
-
-      for (var i = 0; i < base.length; i++) {
-         dictVi[base[i]] = vi[i];
-         dictEng[base[i]] = eng[i];
-      }
+      udemySubtitleObserver.initData(base, vi , eng);
    }
    return resAPI.code;
-}
-
-// convert .srt file into text array
-function parseSub(data) {
-   var result = [];
-   let items = data.split("\n\r\n");
-   $.each(items, function(index, el) {
-      let cut = el.split("\r\n");
-      try {
-         result.push(cut[2].trim());
-      } catch (e) {
-         result.push("");
-      }
-   });
-   return result;
 }
 
 $(document).ready(function() {
    enable = false;
    initComponents();
-   changeSubtitle();
+   udemySubtitleObserver.changeSubtitle();
    startObserver();
    initData()
       .then(data => {
@@ -103,14 +79,13 @@ function initComponents() {
    initButton();
 
    //Observe the paragraph
-   subtitleObserver = new subtitleObserver(changeSubtitle);
-
+   udemySubtitleObserver = new subtitleObserver(direct_sub_node);
    // reload subtitle when user change lesson.
    videoObserver = new MutationObserver(function(mutations) {
       // Check if user change lesson.
       if (window.location.pathname !== pathname) {
          pathname = window.location.pathname;
-         mode = 0;
+         udemySubtitleObserver.mode = 0;
          initData().then(code => {
             pageLoad(code);
          });
@@ -138,7 +113,7 @@ function pageLoad(code) {
                      text: 'Vietnamese',
                      action: function() {
                         start(1, res.float);
-                        changeSubtitle();
+                        udemySubtitleObserver.changeSubtitle();
                         setActiveButton(viBtn);
                      }
                   },
@@ -146,7 +121,7 @@ function pageLoad(code) {
                      text: 'English',
                      action: function() {
                         start(2, res.float);
-                        changeSubtitle();
+                        udemySubtitleObserver.changeSubtitle();
                         setActiveButton(engBtn);
                      }
                   },
@@ -168,55 +143,33 @@ function pageLoad(code) {
 }
 
 function start(type, float) {
-   mode = type;
+   udemySubtitleObserver.mode = type;
    // Add Subtitle Button
    button.insertAfter("button[aria-label=\"Captions\"]");
 
    // Change Transcript when user open
    $("[aria-label=\"Transcript\"]").parent().parent().click(function() {
-      if (mode === 1) changeTranscript(dictVi);
-      else if (mode === 2) changeTranscript(dictEng);
+      if (udemySubtitleObserver.mode === 1) changeTranscript(udemySubtitleObserver.dictVi);
+      else if (udemySubtitleObserver.mode === 2) changeTranscript(udemySubtitleObserver.dictEng);
    });
    // Change transcript if is exit when user open page
    if ($(".transcript--cue-container--wu3UY").length > 0) {
-      changeTranscript(dictVi);
+      changeTranscript(udemySubtitleObserver.dictVi);
    }
 
    turnSubtitleOn();
-   changeSubtitle();
+   udemySubtitleObserver.changeSubtitle();
    if(float) initMenuComponents();
-}
-
-function changeSubtitle() {
-   let captionNode = $(direct_sub_node);
-
-   let eng = captionNode.text().trim(); // get current subtitle
-   let translatedTxt;
-   if (mode === 0) {
-      oldSubtitle = eng;
-      return;
-   } else if (mode === 1) {
-      translatedTxt = dictVi[eng];
-   } else if (mode === 2) {
-      translatedTxt = dictEng[eng];
-   } else {
-      return;
-   }
-
-   if (translatedTxt !== undefined && translatedTxt !== eng) {
-      captionNode.text(translatedTxt);
-      oldSubtitle = eng;
-   }
-
 }
 
 function startObserver() {
    try {
       captionContainer = $(caption).get(0);
-      subtitleObserver.startObserver(captionContainer);
+      udemySubtitleObserver.startObserver(captionContainer);
       videoObserver.observe($("video").get(0), {
          attributes: true
       });
+
    } catch(err) {
       setTimeout(function() {
          startObserver();
@@ -263,31 +216,26 @@ function initButton() {
    viBtn.click(function(event) {
       turnSubtitleOn();
       setActiveButton(viBtn);
-      $(direct_sub_node).text(oldSubtitle);
-      mode = 1;
-      changeSubtitle();
-      if ($(".transcript--cue-container--wu3UY").length > 0) {
-         changeTranscript(dictVi);
-      }
+      $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
+      udemySubtitleObserver.mode = 1;
+      udemySubtitleObserver.changeSubtitle();
+      changeTranscript(udemySubtitleObserver.dictVi);
    });
 
    engBtn.click(function(event) {
       turnSubtitleOn();
       setActiveButton(engBtn);
-      $(direct_sub_node).text(oldSubtitle);
-      mode = 2;
-      changeSubtitle();
-      if ($(".transcript--cue-container--wu3UY").length > 0) {
-         changeTranscript(dictEng);
-      }
+      $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
+      udemySubtitleObserver.mode = 2;
+      udemySubtitleObserver.changeSubtitle();
+      changeTranscript(udemySubtitleObserver.dictEng);
    });
 
    offBtn.click(function(event) {
       setActiveButton(offBtn);
-      $(direct_sub_node).text(oldSubtitle);
-      mode = 0;
+      $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
+      udemySubtitleObserver.mode = 0;
    });
-
 
    // Add elements
    list.append(viBtn);
