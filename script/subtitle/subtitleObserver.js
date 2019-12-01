@@ -9,8 +9,8 @@ class subtitleObserver {
       this.dictEng = [];
       this.dictVi = [];
       for (var i = 0; i < base.length; i++) {
-         this.dictVi[base[i]] = vi[i];
-         this.dictEng[base[i]] = eng[i];
+         this.dictVi[base[i].trim()] = vi[i];
+         this.dictEng[base[i].trim()] = eng[i];
       }
    }
    changeSubtitle(){
@@ -34,9 +34,9 @@ class subtitleObserver {
    }
    startObserver(element){
       this.subtitleObserver.observe(element, {
-         subtree: true,
-         childList: true,
-         characterData: true
-      });
+        attributes: true,
+        characterData: true,
+        childList: true,
+     });
    }
 }

@@ -33,7 +33,7 @@
          "js": [
             "script/libary/jquery.js",
             "script/libary/jquery-confirm.min.js",
-            "script/subtitle/subtitleHandling.js",            
+            "script/subtitle/subtitleHandling.js",
             "script/subtitle/subtitleObserver.js",
             "script/subtitle/udemy-subtitle.js"
          ],
@@ -48,7 +48,11 @@
          "matches": ["https://www.youtube.com/*"],
          "js": [
             "script/libary/jquery.js",
-            "script/libary/jquery-confirm.min.js"
+            "script/libary/jquery-confirm.min.js",
+            "script/getData.js",
+            "script/subtitle/subtitleHandling.js",
+            "script/subtitle/subtitleObserver.js",
+            "script/subtitle/youtubeSubtitle.js"
          ],
          "css": [
             "style/jquery-confirm.min.css"
