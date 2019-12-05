@@ -6,15 +6,6 @@ if(!url.includes("?&cc_load_policy=1&cc_lang_pref=en&hl=en"))
 
 let youtubeSubtitle, vi, bs, eng,
     iconBtn, viBtn, engBtn, offBtn, settingMenu;
-const res =
-{
-   code: 200,
-   data: {
-      bs: "https://firebasestorage.googleapis.com/v0/b/funix-subtitle.appspot.com/o/%5BDownSub.com%5D%20Tip%201_%20Think%20Before%20You%20Share.srt?alt=media&token=2bb851ea-7f53-411d-bfdb-d2a298287f96",
-      vi: "https://firebasestorage.googleapis.com/v0/b/funix-subtitle.appspot.com/o/%5BDownSub.com%5D%20Tip%201_%20Think%20Before%20You%20Share%20(1).srt?alt=media&token=d49f7b44-d7d7-4420-aa48-c9e81ad8819d",
-      en: "https://firebasestorage.googleapis.com/v0/b/funix-subtitle.appspot.com/o/%5BDownSub.com%5D%20Tip%201_%20Think%20Before%20You%20Share.srt?alt=media&token=2bb851ea-7f53-411d-bfdb-d2a298287f96"
-   }
-};
 
 $(document).ready(function() {
    initComponents();
@@ -65,20 +56,28 @@ function initComponents() {
          }
       }
    }
-   initButton();
-   startObserver();
    initData();
 }
 
 function initData()
 {
-   if(res.code === 200 && getVideoID() === 'BcdZm3WAF4A')
-   {
-      getData(res.data).then(res => {
-         youtubeSubtitle.initData(bs, vi, eng);
-         showConfirm();
-      });
-   }
+   let request = {
+      content: "POST Request",
+      requestUrl: "https://funix-subtitle.firebaseapp.com/get",
+      requestBody: {
+         cid: 'youtube',
+         lid: getVideoID()
+      }
+   };
+   sendMessagePromise(request).then(res => {
+      if(res.code === 200)
+      {
+         getData(res.data).then(res => {
+            youtubeSubtitle.initData(bs, vi, eng);
+            showConfirm();
+         });
+      }
+   });
 }
 
 function initButton()
@@ -135,28 +134,36 @@ function showConfirm()
                   text: 'Vietnamese',
                   action: function() {
                      youtubeSubtitle.mode = 1;
+                     initButton();
                      setActiveButton(viBtn);
+                     startObserver();
                   }
                },
                eng: {
                   text: 'English',
                   action: function() {
                      youtubeSubtitle.mode = 2;
+                     initButton();
                      setActiveButton(engBtn);
+                     startObserver();
                   }
                },
                off: {
                   text: 'Keep original',
                   action: function() {
                      youtubeSubtitle.mode = 0;
+                     initButton();
                      setActiveButton(offBtn);
+                     startObserver();
                   }
                }
             }
          });
       } else if (subtitleMode === "0") {
          youtubeSubtitle.mode = 1;
+         initButton();
          setActiveButton(viBtn);
+         startObserver();
       } else if (subtitleMode === "2") {
          setActiveButton(offBtn);
       }

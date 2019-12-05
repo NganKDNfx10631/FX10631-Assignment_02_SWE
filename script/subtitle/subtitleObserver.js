@@ -34,9 +34,9 @@ class subtitleObserver {
    }
    startObserver(element){
       this.subtitleObserver.observe(element, {
-        attributes: true,
-        characterData: true,
-        childList: true,
+         subtree: true,
+         childList: true,
+         characterData: true
      });
    }
 }
