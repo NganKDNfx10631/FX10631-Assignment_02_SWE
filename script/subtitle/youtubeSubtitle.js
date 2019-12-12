@@ -1,14 +1,15 @@
 let url = window.location.href;
-if(!url.includes("?&cc_load_policy=1&cc_lang_pref=en&hl=en"))
+if(!url.includes("?&cc_load_policy=1&cc_lang_pref=en&hl=en&autohide=1&autoplay=1"))
 {
-   location.replace(url + "?&cc_load_policy=1&cc_lang_pref=en&hl=en");
+   location.replace(url + "?&cc_load_policy=1&cc_lang_pref=en&hl=en&autohide=1&autoplay=1");
 }
 
 let youtubeSubtitle, vi, bs, eng,
-    iconBtn, viBtn, engBtn, offBtn, settingMenu;
+    iconBtn, viBtn, engBtn, offBtn, settingMenu,
+    captionNode;
 
 $(document).ready(function() {
-   initComponents();
+   initData();
 });
 
 function getTranslate(current) {
@@ -41,22 +42,38 @@ function startObserver() {
    }
 }
 
-function initComponents() {
+function initComponents(type) {
 
-   youtubeSubtitle = new subtitleObserver("");
-   youtubeSubtitle.changeSubtitle = function() {
-      let current = getCurrentSubtitle();
-      if(current !== youtubeSubtitle.oldSubtitle)
-      {
-         let translatedTxt = getTranslate(current);
-         if(translatedTxt !== undefined)
+   if(!type)
+   {
+      youtubeSubtitle.changeSubtitle = function() {
+         let current = getCurrentSubtitle();
+         if(current !== youtubeSubtitle.oldSubtitle)
          {
-            changeText(translatedTxt);
-            youtubeSubtitle.oldSubtitle = current;
+            let translatedTxt = getTranslate(current);
+            if(translatedTxt !== undefined)
+            {
+               changeText(translatedTxt);
+               youtubeSubtitle.oldSubtitle = current;
+            }
+         }
+      }
+   } else {
+      youtubeSubtitle.changeSubtitle = function() {
+         let lines = $("div:not(#funix-subtitle) .ytp-caption-segment");
+         let currentLine = $(lines[lines.length - 1]);
+         let base = bs.find(url => url.includes(currentLine.text()));
+         if(base != undefined && base != youtubeSubtitle.oldSubtitle)
+         {
+            let translatedTxt = getTranslate(base.trim());
+            if(translatedTxt !== undefined)
+            {
+               $(captionNode).text(translatedTxt);
+               youtubeSubtitle.oldSubtitle = base;
+            }
          }
       }
    }
-   initData();
 }
 
 function initData()
@@ -72,9 +89,11 @@ function initData()
    sendMessagePromise(request).then(res => {
       if(res.code === 200)
       {
-         getData(res.data).then(res => {
+         getData(res.data).then(() => {
+            youtubeSubtitle = new subtitleObserver("");
             youtubeSubtitle.initData(bs, vi, eng);
-            showConfirm();
+            initComponents(res.data.isAuto);
+            showConfirm(res.data.isAuto);
          });
       }
    });
@@ -117,46 +136,19 @@ function initButton()
    $(".ytp-right-controls").prepend(iconBtn);
 }
 
-function showConfirm()
+function showConfirm(type)
 {
    getSettingData().then(res => {
       let subtitleMode = res.modeSubtitle;
       if (subtitleMode === "1") {
-         $.alert({
-            icon: '',
-            theme: 'modern',
-            title: 'FUNiX Passport',
-            content: "This Lecture already has subtitles support, which language do you want to translate?",
-            boxWidth: '500px',
-            useBootstrap: false,
-            buttons: {
-               vi: {
-                  text: 'Vietnamese',
-                  action: function() {
-                     youtubeSubtitle.mode = 1;
-                     initButton();
-                     setActiveButton(viBtn);
-                     startObserver();
-                  }
-               },
-               eng: {
-                  text: 'English',
-                  action: function() {
-                     youtubeSubtitle.mode = 2;
-                     initButton();
-                     setActiveButton(engBtn);
-                     startObserver();
-                  }
-               },
-               off: {
-                  text: 'Keep original',
-                  action: function() {
-                     youtubeSubtitle.mode = 0;
-                     initButton();
-                     setActiveButton(offBtn);
-                     startObserver();
-                  }
-               }
+         confirmSubtitle().then(mode => {
+            youtubeSubtitle.mode = mode;
+            initButton();
+            startObserver();
+            if(type)
+            {
+               startSubtitleModeOnYotube();
+               initVisibleSubtitle();
             }
          });
       } else if (subtitleMode === "0") {
@@ -164,6 +156,11 @@ function showConfirm()
          initButton();
          setActiveButton(viBtn);
          startObserver();
+         if(type)
+         {
+            startSubtitleModeOnYotube();
+            initVisibleSubtitle();
+         }
       } else if (subtitleMode === "2") {
          setActiveButton(offBtn);
       }
@@ -209,4 +206,19 @@ function setActiveButton(button) {
 
 function getVideoID() {
    return (window.location.pathname).split("/")[2];
+}
+
+function startSubtitleModeOnYotube() {
+   $(".ytp-subtitles-button")
+   .trigger("click");
+}
+
+function initVisibleSubtitle() {
+   let container = $('<div class="caption-window ytp-caption-window-bottom ytp-caption-window-rollup" id="funix-text" dir="ltr" tabindex="0" aria-live="assertive" lang="en" draggable="true" data-layer="4" style="touch-action: none; text-align: left; overflow: hidden; left: 21.2%; width: 1093px; height: 100px; bottom: 2%;"> <span class="captions-text" style="overflow-wrap: normal; display: block;"> <span class="caption-visual-line" style="display: block;"> <span class="ytp-caption-segment" style="display: inline-block; white-space: pre-wrap; background: rgba(8, 8, 8, 0.5); -webkit-box-decoration-break: clone; border-radius: 5.20556px; font-size: 41.6444px; color: rgb(255, 255, 255); fill: rgb(255, 255, 255); font-family: &quot;YouTube Noto&quot;, Roboto, &quot;Arial Unicode Ms&quot;, Arial, Helvetica, Verdana, &quot;PT Sans Caption&quot;, sans-serif;"></span> </span> </span> </div>');
+   captionNode = container.find(".ytp-caption-segment");
+   setTimeout(() => {
+      $("#caption-window-1")
+      .css('display', 'none')
+      .before(container);
+   }, 1000);
 }

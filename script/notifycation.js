@@ -37,3 +37,51 @@ function notify(text) {
        closeIcon: true,
    });
 }
+
+function confirmSubtitle() {
+   return new Promise(function(resolve, reject) {
+      $.alert({
+         icon: '',
+         theme: 'modern',
+         title: 'FUNiX Passport',
+         content: "This page already has subtitles support, which language do you want to translate?",
+         boxWidth: '500px',
+         useBootstrap: false,
+         buttons: {
+            vi: {
+               text: 'Vietnamese',
+               action: function() {
+                  // youtubeSubtitle.mode = 1;
+                  // initButton();
+                  // setActiveButton(viBtn);
+                  // startObserver();
+                  // startSubtitleModeOnYotube();
+                  resolve(1);
+               }
+            },
+            eng: {
+               text: 'English',
+               action: function() {
+                  // youtubeSubtitle.mode = 2;
+                  // initButton();
+                  // setActiveButton(engBtn);
+                  // startObserver();
+                  // startSubtitleModeOnYotube();
+                  resolve(2);
+               }
+            },
+            off: {
+               text: 'Keep original',
+               action: function() {
+                  // youtubeSubtitle.mode = 0;
+                  // initButton();
+                  // setActiveButton(offBtn);
+                  // startObserver();
+                  // startSubtitleModeOnYotube();
+                  resolve(0);
+               }
+            }
+         }
+      });
+   });
+}

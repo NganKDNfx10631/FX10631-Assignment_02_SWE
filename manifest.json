@@ -52,6 +52,7 @@
             "script/getData.js",
             "script/subtitle/subtitleHandling.js",
             "script/subtitle/subtitleObserver.js",
+            "script/notifycation.js",
             "script/subtitle/youtubeSubtitle.js"
          ],
          "css": [
