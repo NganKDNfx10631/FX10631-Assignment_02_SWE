@@ -51,14 +51,7 @@ async function initData() {
       }).then(data => {
          vi = SubtitleHandling.parseSub(data);
       });
-      // Get base sub
-      await sendMessagePromise({
-         content: "GET Request",
-         requestUrl: resAPI.data.bs,
-      }).then(data => {
-         base = SubtitleHandling.parseSub(data);
-      });
-      udemySubtitleObserver.initData(base, vi , eng);
+      udemySubtitleObserver.initData(vi , eng);
    }
    return resAPI.code;
 }
@@ -66,7 +59,6 @@ async function initData() {
 $(document).ready(function() {
    enable = false;
    initComponents();
-   udemySubtitleObserver.changeSubtitle();
    startObserver();
    initData()
       .then(data => {
@@ -113,7 +105,6 @@ function pageLoad(code) {
                      text: 'Vietnamese',
                      action: function() {
                         start(1, res.float);
-                        udemySubtitleObserver.changeSubtitle();
                         setActiveButton(viBtn);
                      }
                   },
@@ -121,7 +112,6 @@ function pageLoad(code) {
                      text: 'English',
                      action: function() {
                         start(2, res.float);
-                        udemySubtitleObserver.changeSubtitle();
                         setActiveButton(engBtn);
                      }
                   },
@@ -158,38 +148,37 @@ function start(type, float) {
    }
 
    turnSubtitleOn();
-   udemySubtitleObserver.changeSubtitle();
    if(float) initMenuComponents();
 }
 
 function startObserver() {
-   try {
-      captionContainer = $(caption).get(0);
-      udemySubtitleObserver.startObserver(captionContainer);
-      videoObserver.observe($("video").get(0), {
-         attributes: true
-      });
-
-   } catch(err) {
-      setTimeout(function() {
+   let video = $("video").get(0);
+   if(video === undefined)
+   {
+      setTimeout(() => {
          startObserver();
       }, 500);
+   } else {
+      udemySubtitleObserver.startObserver(video);
+      videoObserver.observe(video, {
+         attributes: true
+      });
    }
 }
 
 function changeTranscript(tranList) {
-   setTimeout(function() {
-      let container = $(".transcript--cue-container--wu3UY > p > span");
-      if (container.length > 0) {
-         $.each(container, function(index, value) {
-            let text = $(value).text();
-            let tranText = tranList[text];
-            if (tranText !== undefined) {
-               $(value).text(tranText);
-            }
-         });
-      }
-   }, 500);
+   // setTimeout(function() {
+   //    let container = $(".transcript--cue-container--wu3UY > p > span");
+   //    if (container.length > 0) {
+   //       $.each(container, function(index, value) {
+   //          let text = $(value).text();
+   //          let tranText = tranList[text];
+   //          if (tranText !== undefined) {
+   //             $(value).text(tranText);
+   //          }
+   //       });
+   //    }
+   // }, 500);
 }
 
 function initButton() {
@@ -218,7 +207,6 @@ function initButton() {
       setActiveButton(viBtn);
       $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
       udemySubtitleObserver.mode = 1;
-      udemySubtitleObserver.changeSubtitle();
       changeTranscript(udemySubtitleObserver.dictVi);
    });
 
@@ -227,13 +215,11 @@ function initButton() {
       setActiveButton(engBtn);
       $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
       udemySubtitleObserver.mode = 2;
-      udemySubtitleObserver.changeSubtitle();
       changeTranscript(udemySubtitleObserver.dictEng);
    });
 
    offBtn.click(function(event) {
       setActiveButton(offBtn);
-      $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
       udemySubtitleObserver.mode = 0;
    });
 

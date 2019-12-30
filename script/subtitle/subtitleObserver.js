@@ -5,38 +5,34 @@ class subtitleObserver {
          this.changeSubtitle();
       }).bind(this));
    }
-   initData(base, vi, eng){
-      this.dictEng = [];
-      this.dictVi = [];
-      for (var i = 0; i < base.length; i++) {
-         this.dictVi[base[i].trim()] = vi[i];
-         this.dictEng[base[i].trim()] = eng[i];
-      }
+   initData(vi, eng){
+      this.dictEng = eng;
+      this.dictVi = vi;
    }
    changeSubtitle(){
       let $captionNode = $(this.direct_sub_node);
-      let eng = $captionNode.text().trim(); // get current subtitle
-      let translatedTxt;
+      let time = this.videoElement.currentTime*1000;
+      let translatedOb;
       if (this.mode === 0) {
-         this.oldSubtitle = eng;
          return;
       } else if (this.mode === 1) {
-         translatedTxt = this.dictVi[eng];
+         translatedOb = this.dictVi.find(el => (el.start <= time && el.end >= time));
       } else if (this.mode === 2) {
-         translatedTxt = this.dictEng[eng];
+         translatedOb = this.dictEng.find(el => (el.start <= time && el.end >= time));
       } else {
          return;
       }
-      if (translatedTxt !== undefined && translatedTxt !== eng) {
-         $captionNode.text(translatedTxt);
-         this.oldSubtitle = eng;
+      if (translatedOb !== undefined) {
+         $captionNode.text(translatedOb.text);
       }
    }
    startObserver(element){
-      this.subtitleObserver.observe(element, {
-         subtree: true,
-         childList: true,
-         characterData: true
+      this.videoElement = element
+      let self = this;
+      $(element).on(
+        "timeupdate",
+        function(event){
+          self.changeSubtitle();
      });
    }
 }

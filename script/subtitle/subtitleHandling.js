@@ -5,11 +5,20 @@ class SubtitleHandling {
       let self = this;
       $.each(items, function(index, el) {
          let cut = el.split("\r\n");
-         let time = cut[1].split("-->");
-         try {
-            result.push(cut[2].trim());
-         } catch (e) {
-            result.push("");
+         if(cut.length === 3)
+         {
+            let time = cut[1].split("-->");
+            let text;
+            try {
+               text = cut[2].trim()
+            } catch (e) {
+               text = "";
+            }
+            result.push({
+               start: self.timeToMillisecond(time[0].trim()),
+               end: self.timeToMillisecond(time[1].trim()),
+               text: text
+            });
          }
       });
       return result;
