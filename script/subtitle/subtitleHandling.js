@@ -33,7 +33,11 @@ class SubtitleHandling {
       f = f.replace(/\r\n|\r|\n/g, '\n')
 
       while ((matches = pattern.exec(f)) != null) {
-         result.push(matches[4] +"\r\n"+ matches[5]);
+         result.push({
+            start: this.timeToMillisecond(matches[2].trim()),
+            end: this.timeToMillisecond(matches[3].trim()),
+            text: matches[4] +"\r\n"+ matches[5]
+         });
       }
       return result;
    }

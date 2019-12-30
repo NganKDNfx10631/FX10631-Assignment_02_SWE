@@ -137,16 +137,6 @@ function start(type, float) {
    // Add Subtitle Button
    button.insertAfter("button[aria-label=\"Captions\"]");
 
-   // Change Transcript when user open
-   $("[aria-label=\"Transcript\"]").parent().parent().click(function() {
-      if (udemySubtitleObserver.mode === 1) changeTranscript(udemySubtitleObserver.dictVi);
-      else if (udemySubtitleObserver.mode === 2) changeTranscript(udemySubtitleObserver.dictEng);
-   });
-   // Change transcript if is exit when user open page
-   if ($(".transcript--cue-container--wu3UY").length > 0) {
-      changeTranscript(udemySubtitleObserver.dictVi);
-   }
-
    turnSubtitleOn();
    if(float) initMenuComponents();
 }
@@ -164,21 +154,6 @@ function startObserver() {
          attributes: true
       });
    }
-}
-
-function changeTranscript(tranList) {
-   // setTimeout(function() {
-   //    let container = $(".transcript--cue-container--wu3UY > p > span");
-   //    if (container.length > 0) {
-   //       $.each(container, function(index, value) {
-   //          let text = $(value).text();
-   //          let tranText = tranList[text];
-   //          if (tranText !== undefined) {
-   //             $(value).text(tranText);
-   //          }
-   //       });
-   //    }
-   // }, 500);
 }
 
 function initButton() {

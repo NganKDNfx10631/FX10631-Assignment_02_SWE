@@ -24,7 +24,7 @@ class subtitleObserver {
       }
       if (translatedOb !== undefined) {
          $captionNode.text(translatedOb.text);
-      }
+      } else $captionNode.text("");
    }
    startObserver(element){
       this.videoElement = element

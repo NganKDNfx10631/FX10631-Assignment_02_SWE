@@ -51,33 +51,18 @@ function confirmSubtitle() {
             vi: {
                text: 'Vietnamese',
                action: function() {
-                  // youtubeSubtitle.mode = 1;
-                  // initButton();
-                  // setActiveButton(viBtn);
-                  // startObserver();
-                  // startSubtitleModeOnYotube();
                   resolve(1);
                }
             },
             eng: {
                text: 'English',
                action: function() {
-                  // youtubeSubtitle.mode = 2;
-                  // initButton();
-                  // setActiveButton(engBtn);
-                  // startObserver();
-                  // startSubtitleModeOnYotube();
                   resolve(2);
                }
             },
             off: {
                text: 'Keep original',
                action: function() {
-                  // youtubeSubtitle.mode = 0;
-                  // initButton();
-                  // setActiveButton(offBtn);
-                  // startObserver();
-                  // startSubtitleModeOnYotube();
                   resolve(0);
                }
             }
