@@ -2,7 +2,6 @@ var snippets;
 function initOld() {
 	let agrs = {
 			url: "https://pp.funix.edu.vn/funix-passport/get_translation.php",
-			//url: "http://localhost:3788/funix-translate/get_translation.php",
 			type: "POST",
 			cache: false,
 			dataType: 'text',
@@ -45,13 +44,10 @@ function gotDataOld(snippets) {
    				Yes: {
    					action: function() {
    						renderOld(snippets, res.float);
-
    					}
    				},
    				No: {
-   					action: function() {
-
-						}
+   					action: function() {}
    				}
    			}
    		});
@@ -82,10 +78,6 @@ function renderTranscriptOld(snippets,float) {
 function renderHTMLOld(snippets, float)
 {
 	if(float) initMenuComponents();
-	// Find all content block that contain a term
-	//+	var replaced = $("body").html();
-	//replaced = encodeURIComponent(replaced);
-	//console.log(replaced);
 
 	// Decode text
 	for (i = 0; i < snippets.length; i++) {
@@ -107,44 +99,16 @@ function renderHTMLOld(snippets, float)
         // clean empty spaces including carriage return
 		value = currentNode.nodeValue.replace(/[\n\r]*/g,'').replace(/\t/g, ' ').replace(/&nbsp;/g, " ").replace(/\s+/g, ' ');
 
-		// console.log("cleaned original: [" + value + "]");
-
         if (value != "") {
 	      for (i = 0; i < snippets.length; i++) {
-			// console.log("db original: [" + snippets[i].original + "]");
-		/*
-		var ele = $(document).xpath(decodeURIComponent(snippets[i].xpath));
-		ele.html(decodeURIComponent(snippets[i].translated));
-		alert(decodeURIComponent(snippets[i].xpath));
-		$(ele).attr('xindex', i);
-		$(ele).attr('xlang', 'vi');
-		*/
-		// console.log("|" + value + "|");
 
 			originalValue = snippets[i].original.replace(/[\n\r]*/g,'').replace(/\t/g, ' ').replace(/&nbsp;/g, " ").replace(/\s+/g, ' ');
 		    if (value.includes(originalValue) && value.length === originalValue.length) {
 			  currentNode.nodeValue = snippets[i].translated;
 			  break;
 		    }
-
-		/*
-			$(currentNode).click(function(){
-				var index = $(this).attr('xindex');
-				if (typeof index !== typeof undefined && index !== false) {
-					if ($(this).attr('xlang') == 'vi') {
-						$(this).text(snippets[index].original);
-						$(this).attr('xlang', 'en');
-					} else {
-						$(this).text(snippets[index].translated);
-						$(this).attr('xlang', 'vi');
-					}
-				}
-			});
-		*/
 	      }
 	    }
       }
     } while (walker.nextNode());
-	//+replaced = decodeURIComponent(replaced);
-	//+$("body").html(replaced);
 }

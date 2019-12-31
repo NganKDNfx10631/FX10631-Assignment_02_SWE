@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(function(req){
 });
 
 function reportIssue() {
-   $.confirm(creatPrompt(function() {
+   $.confirm(Notifycation.creatPrompt(function() {
       return postReport(this);
    }));
 }
@@ -22,7 +22,7 @@ function postReport(self) {
    // Validate
    if(data.name === "" || data.email === "" || data.message === "")
    {
-      notify("Fill all information!");
+      Notifycation.notify("Fill all information!");
       return false;
    }
    data.date = (new Date()).toLocaleDateString("vi");
@@ -32,7 +32,7 @@ function postReport(self) {
       data: data
    };
 
-   $.alert(creatLoadingAjax(function() {
+   $.alert(Notifycation.creatLoadingAjax(function() {
       var self = this;
       self.showLoading(true);
       let request = {

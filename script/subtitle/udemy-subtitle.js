@@ -93,7 +93,7 @@ function pageLoad(code) {
       getSettingData().then(res => {
          let subtitleMode = res.modeSubtitle;
          if (subtitleMode === "1") {
-            confirmSubtitle().then(mode => {
+            Notifycation.confirmSubtitle().then(mode => {
                start(mode, res.float);
                setActiveButton([offBtn, viBtn, engBtn][mode]);
             });

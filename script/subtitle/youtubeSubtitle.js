@@ -79,7 +79,7 @@ function showConfirm()
    getSettingData().then(res => {
       let subtitleMode = res.modeSubtitle;
       if (subtitleMode === "1") {
-         confirmSubtitle().then(mode => {
+         Notifycation.confirmSubtitle().then(mode => {
             youtubeSubtitle.mode = mode;
             initButton();
             setActiveButton([offBtn, viBtn, engBtn][mode]);
@@ -121,11 +121,6 @@ function setActiveButton(button) {
 
 function getVideoID() {
    return (window.location.pathname).split("/")[2];
-}
-
-function startSubtitleModeOnYotube() {
-   $(".ytp-subtitles-button")
-   .trigger("click");
 }
 
 function initVisibleSubtitle() {
