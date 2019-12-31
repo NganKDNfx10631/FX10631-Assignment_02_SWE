@@ -93,35 +93,9 @@ function pageLoad(code) {
       getSettingData().then(res => {
          let subtitleMode = res.modeSubtitle;
          if (subtitleMode === "1") {
-            $.alert({
-               icon: '',
-               theme: 'modern',
-               title: 'FUNiX Passport',
-               content: "This Lecture already has subtitles support, which language do you want to translate?",
-               boxWidth: '500px',
-               useBootstrap: false,
-               buttons: {
-                  vi: {
-                     text: 'Vietnamese',
-                     action: function() {
-                        start(1, res.float);
-                        setActiveButton(viBtn);
-                     }
-                  },
-                  eng: {
-                     text: 'English',
-                     action: function() {
-                        start(2, res.float);
-                        setActiveButton(engBtn);
-                     }
-                  },
-                  off: {
-                     text: 'Keep original',
-                     action: function() {
-                        setActiveButton(offBtn);
-                     }
-                  }
-               }
+            confirmSubtitle().then(mode => {
+               start(mode, res.float);
+               setActiveButton([offBtn, viBtn, engBtn][mode]);
             });
          } else if (subtitleMode === "0") {
             start(1, res.float);
@@ -182,7 +156,6 @@ function initButton() {
       setActiveButton(viBtn);
       $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
       udemySubtitleObserver.mode = 1;
-      changeTranscript(udemySubtitleObserver.dictVi);
    });
 
    engBtn.click(function(event) {
@@ -190,7 +163,6 @@ function initButton() {
       setActiveButton(engBtn);
       $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
       udemySubtitleObserver.mode = 2;
-      changeTranscript(udemySubtitleObserver.dictEng);
    });
 
    offBtn.click(function(event) {
