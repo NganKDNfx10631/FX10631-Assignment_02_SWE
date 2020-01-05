@@ -59,13 +59,27 @@
             "style/jquery-confirm.min.css"
          ],
          "run_at": "document_end"
+      },
+      {
+         "matches": ["https://applieddigitalskills.withgoogle.com/*"],
+         "js": [
+            "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
+            "script/subtitle/subtitleHandling.js",
+            "script/subtitle/subtitleObserver.js",
+            "script/subtitle/applieddigitalskills.js"
+         ],
+         "css": [
+            "style/style.css",
+            "style/jquery-confirm.min.css"
+         ],
+         "run_at": "document_end"
       }
    ],
    "background": {
       "scripts": [
          "script/libary/jquery.js",
          "script/background.js",
-         "script/background/youtube-subtitle-background.js",
          "script/background/refresh-domain.js"
       ]
    },
