@@ -94,5 +94,5 @@
    "name": "FUNiX Passport",
    "permissions": [ "tabs", "http://*/*", "https://*/*", "storage", "webNavigation"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.6.1"
+   "version": "2.6.2"
 }
