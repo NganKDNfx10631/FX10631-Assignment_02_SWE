@@ -19,6 +19,7 @@ function postReport(self) {
    data.email = self.$content.find('#email').val();
    data.message = self.$content.find('#message').val();
 
+   data.url = window.location.href;
    // Validate
    if(data.name === "" || data.email === "" || data.message === "")
    {
@@ -26,7 +27,6 @@ function postReport(self) {
       return false;
    }
    data.date = (new Date()).toLocaleDateString("vi");
-   data.url = window.location.href;
    let report = {
       id: (new Date()).getTime() + "",
       data: data

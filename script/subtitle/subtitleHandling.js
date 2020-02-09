@@ -7,6 +7,7 @@ class SubtitleHandling {
          let cut = el.split("\r\n");
          if(cut.length === 3)
          {
+            cut[1] = cut[1].replace("->", "-->");
             let time = cut[1].split("-->");
             let text;
             try {
@@ -14,6 +15,7 @@ class SubtitleHandling {
             } catch (e) {
                text = "";
             }
+            console.log(time);
             result.push({
                start: self.timeToMillisecond(time[0].trim()),
                end: self.timeToMillisecond(time[1].trim()),
@@ -45,6 +47,7 @@ class SubtitleHandling {
    static timeToMillisecond(str) {
       str = str.replace(".", ",");
       let splits = str.split(":");
+      splits.map(el => el.trim());
       let millisecond = 0;
       millisecond += parseInt(splits[0])*3600*1000;
       millisecond += parseInt(splits[1])*60*1000;
