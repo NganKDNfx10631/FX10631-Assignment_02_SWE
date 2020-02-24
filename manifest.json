@@ -80,7 +80,8 @@
       "scripts": [
          "script/libary/jquery.js",
          "script/background/ajax.js",
-         "script/background/refresh-domain.js"
+         "script/background/refresh-domain.js",
+         "script/background/update.js"
       ]
    },
    "description": "This utility helps FUNiX students for learning online, ex: Vietnamese translation for course materials, highlight video's subtitles.",
@@ -92,7 +93,7 @@
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoQZDBBra2X8pb87VP2pFSRKFsbh0lBoo/pvahfUt9dAQJSYYroBIOi3YJ+56CQpYsA/JXyk02/MG0QdeHESfntYQ7XPX8VwgKIyrLE2aCSSg/EfxqYDoLUeMVmhoH0hMac7GInuxEL2ELPa0kpENdFK/xMdGtcfXhaw1CuheATDcice2E55ojI2jZCdj5t/DrIB9O+k0P3sX0hF+qh9+3sMjAmkA1JfcZarsc5Sojhdk7T3TJSULCJXvXEafFF+ZnYEEkDpEbXQfM3mFSFQnl55vEWAjN2E30cTC+jrbhTXvVe9c0/MOo5jzur8/kG+2lRjQUGDo2E4T8jej3kl0JQIDAQAB",
    "manifest_version": 2,
    "name": "FUNiX Passport",
-   "permissions": ["http://*/*", "https://*/*", "storage"],
+   "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "2.6.3"
 }
