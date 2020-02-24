@@ -71,4 +71,30 @@ class Notifycation {
          });
       });
    }
+
+   static confirmPageTranslate()
+   {
+      return new Promise(function(resolve, reject) {
+         $.alert({
+				icon: '',
+				theme: 'modern',
+   			title: 'FUNiX Passport',
+   			content: "This page already has translate support, would you like to enable it?",
+   			boxWidth: '500px',
+   			useBootstrap: false,
+   			buttons: {
+   				Yes: {
+   					action: function() {
+   						resolve(true);
+   					}
+   				},
+   				No: {
+   					action: function() {
+                     resolve(false);
+						}
+   				}
+   			}
+   		});
+      });
+   }
 }

@@ -15,7 +15,6 @@ class SubtitleHandling {
             } catch (e) {
                text = "";
             }
-            console.log(time);
             result.push({
                start: self.timeToMillisecond(time[0].trim()),
                end: self.timeToMillisecond(time[1].trim()),
