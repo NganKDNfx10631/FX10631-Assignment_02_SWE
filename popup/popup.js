@@ -99,6 +99,8 @@ function updateUI() {
          $("#floating #toggle-on").prop('checked',true);
       } else $("#floating #toggle-off").prop('checked',true);
    });
+   let thisVersion = chrome.runtime.getManifest().version;
+   $(".version").text("Version " + thisVersion);
 }
 
 function addEvent() {

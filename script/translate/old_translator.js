@@ -20,10 +20,11 @@ class OldTranslator {
 		});
 	}
 	init() {
+		let self = this;
 		$("#sequence-list").click(function(event) {
-			this.initData();
+			self.initData();
 		});
-		this.initData();
+		self.initData();
 	}
 	gotData(snippets) {
 		let self = this;

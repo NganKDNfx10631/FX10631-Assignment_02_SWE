@@ -1,0 +1,19 @@
+body{
+   height: 100%;
+}
+
+.demo-drawer-header{
+   height: 70px;
+}
+.demo-drawer-header > .title {
+   font-size: 20px;
+   text-align: center;
+   display: block;
+   margin-top: auto;
+   margin-bottom: auto;
+   color: rgba(205, 205, 205, 0.9);
+}
+
+#content p {
+   font-size: 18px;
+}

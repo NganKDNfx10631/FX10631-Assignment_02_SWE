@@ -1,14 +1,15 @@
 chrome.notifications.onClicked.addListener((id) => {
    if(id == "FUNiX Passport Updated")
    {
+      chrome.tabs.create({ url: chrome.runtime.getURL("page/changelog.html") });
       chrome.notifications.clear("FUNiX Passport Updated");
    }
 })
 
 chrome.runtime.onInstalled.addListener(function (details) {
-   var thisVersion = chrome.runtime.getManifest().version;
+   let thisVersion = chrome.runtime.getManifest().version;
    if (details.reason == "install") {
-
+      chrome.tabs.create({ url: chrome.runtime.getURL("page/manual.html") });
    }
    else if (details.reason == "update") {
      let message = '\r\nCurrent version: '+ thisVersion +'\r\nClick to see what news :)';
@@ -16,7 +17,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
         type: "basic",
         title: "FUNiX Passport Updated!",
         message: message,
-        eventTime: 3000,
         iconUrl: "../../icon/funix-passport-icon-512x512.png"
      }
      chrome.notifications.create("FUNiX Passport Updated", options);
