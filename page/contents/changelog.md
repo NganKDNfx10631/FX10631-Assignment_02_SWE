@@ -11,5 +11,6 @@ You have successfully updated **FUNiX Passport**. Changes in this version:
 ##### Changed
 
 * Can interact with the site when using page translation feature.
+* Fix edx bug.
 
 ##### Removed

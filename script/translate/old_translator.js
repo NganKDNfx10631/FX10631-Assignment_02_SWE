@@ -1,13 +1,20 @@
 class OldTranslator {
 	constructor() {}
 	initData(){
+		let url;
+		if(window.location.hostname == "courses.edx.org")
+		{
+				url = "courses.edx.org%2F" + window.location.pathname.split("/")[5];
+		} else {
+			url = encodeURIComponent(window.location.href);
+		}
 		let agrs = {
 				url: "https://pp.funix.edu.vn/funix-passport/get_translation.php",
 				type: "POST",
 				cache: false,
 				dataType: 'text',
 				data: {
-					'url': encodeURIComponent(window.location.href)
+					'url': url
 				}
 		};
 		let self = this;
@@ -42,15 +49,16 @@ class OldTranslator {
 		});
 	}
 	render(snippets, float) {
-		if($(".video-wrapper").length === 0)
-		{
-			this.renderHTML(snippets, float);
-		}
-		else this.renderTranscript(snippets,float);
+		this.renderHTML(snippets, float);
+		// if($(".video-wrapper").length === 0)
+		// {
+		// 	this.renderHTML(snippets, float);
+		// }
+		// else this.renderTranscript(snippets,float);
 	}
 	renderTranscript(snippets,float) {
 		let self = this;
-		if($("ol.subtitles-menu > li").length > 0) renderHTML(snippets,float)
+		if($("ol.subtitles-menu > li").length > 0) this.renderHTML(snippets,float)
 		else{
 			setTimeout(function(){
 				self.renderTranscript(snippets,float);

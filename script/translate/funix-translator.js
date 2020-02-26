@@ -29,7 +29,8 @@ class OnpageTranslator {
 		if(window.location.href.match("courses.edx.org/*"))
 		{
 			let index = this.getIndex("#sequence-list > li > button", "active");
-			request.requestBody.id = encodeURIComponent(window.location.href + "?page=" + index);
+			let url = "courses.edx.org%2F" + window.location.pathname.split("/")[5] + "?page=" + index;
+			request.requestBody.id = url;
 		}
 		let self = this;
 	   chrome.runtime.sendMessage(request, res => {
