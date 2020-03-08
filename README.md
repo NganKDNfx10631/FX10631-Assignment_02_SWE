@@ -54,9 +54,9 @@ B3: Nhấn `Add New` để thêm phụ đề.
 
 ### Tải phụ đề từ `Udemy`.
 
-B1: Nhấn vào biểu tượng của extension trên thanh công cụ của Chrome --> `Download Udemy Subtitle`.
-B2: Nhập ID course muốn lấy file phụ đề trên udemy và `Udemy key`.
-B3: Nhấn nút “Download” để tiến hành tải về.
+B1: Nhấn vào biểu tượng của extension trên thanh công cụ của Chrome --> `Download Udemy Subtitle`.<br/>
+B2: Nhập ID course muốn lấy file phụ đề trên udemy và `Udemy key`.<br/>
+B3: Nhấn nút “Download” để tiến hành tải về.<br/>
 
 **Cách lấy ID khóa học trên Udemy:**
 B1: Vào trang web giới thiệu khóa học đó.<br/>
