@@ -1,0 +1,1 @@
+# Hướng dẫn sử dụng hệ thống dịch của FUNiX
