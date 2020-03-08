@@ -50,11 +50,11 @@ class OldTranslator {
 	}
 	render(snippets, float) {
 		this.renderHTML(snippets, float);
-		// if($(".video-wrapper").length === 0)
-		// {
-		// 	this.renderHTML(snippets, float);
-		// }
-		// else this.renderTranscript(snippets,float);
+		if($(".video-wrapper").length === 0)
+		{
+			this.renderHTML(snippets, float);
+		}
+		else this.renderTranscript(snippets,float);
 	}
 	renderTranscript(snippets,float) {
 		let self = this;
