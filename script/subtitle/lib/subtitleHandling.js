@@ -25,7 +25,7 @@ class SubtitleHandling {
       return result;
    }
 
-   static parseYoutubeSub(f){
+   static parseSubByRegex(f){
       let result = [];
       let pattern = /(\d+)\n([\d:,]+)\s+-{2}\>\s+([\d:,]+)\n([\s\S]*?(?=\n{2}|$))\n([\s\S]*?(?=\n{2}|$))/gm;
       let _regExp = new RegExp(pattern);
@@ -44,6 +44,7 @@ class SubtitleHandling {
    }
 
    static timeToMillisecond(str) {
+      if(!str) return ;
       str = str.replace(".", ",");
       let splits = str.split(":");
       splits.map(el => el.trim());

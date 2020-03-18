@@ -1,9 +1,9 @@
 class subtitleObserver {
    constructor(direct_sub_node) {
       this.direct_sub_node = direct_sub_node;
-      this.subtitleObserver = new MutationObserver((function() {
-         this.changeSubtitle();
-      }).bind(this));
+      // this.subtitleObserver = new MutationObserver((function() {
+      //    this.changeSubtitle();
+      // }).bind(this));
    }
    initData(vi, eng){
       this.dictEng = eng;

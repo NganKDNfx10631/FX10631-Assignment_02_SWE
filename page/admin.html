@@ -62,13 +62,6 @@
 
   <script src="./script/libary/jquery.js" charset="utf-8"></script>
   <script src="./script/libary/showdown.min.js" charset="utf-8"></script>
-  <script type="text/javascript">
-     const src = "../README.md";
-     $.get(src).then(res => {
-      let converter = new showdown.Converter();
-      let html = converter.makeHtml(res);
-      // Render to page
-      $("#content").html(html);
-     });
-  </script>
+  <script src="./script/libary/markdown.js" charset="utf-8"></script>
+  <script src="./script/admin.js" charset="utf-8"></script>
 </html>

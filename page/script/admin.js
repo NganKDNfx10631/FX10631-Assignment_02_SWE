@@ -1,0 +1,1 @@
+(new MarkdownReader("page/contents/changelog.md", "#content")).init();

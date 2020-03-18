@@ -9,11 +9,12 @@
       {
          "js": [
              "script/libary/jquery.js",
-             "script/custom libary/getData.js",
+             "script/lib/getData.js",
+             "./script/lib/requestData.js",
              "script/libary/jquery-confirm.min.js",
              "script/report/report.js",
              "script/float menu/menu.js",
-             "script/custom libary/notifycation.js",
+             "script/lib/notifycation.js",
              "script/translate/old_translator.js",
              "script/translate/funix-translator.js"
           ],
@@ -33,8 +34,8 @@
          "js": [
             "script/libary/jquery.js",
             "script/libary/jquery-confirm.min.js",
-            "script/subtitle/subtitleHandling.js",
-            "script/subtitle/subtitleObserver.js",
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/udemy-subtitle.js"
          ],
          "css": [
@@ -49,10 +50,10 @@
          "js": [
             "script/libary/jquery.js",
             "script/libary/jquery-confirm.min.js",
-            "script/custom libary/getData.js",
-            "script/subtitle/subtitleHandling.js",
-            "script/subtitle/subtitleObserver.js",
-            "script/custom libary/notifycation.js",
+            "script/lib/getData.js",
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
+            "script/lib/notifycation.js",
             "script/subtitle/youtubeSubtitle.js"
          ],
          "css": [
@@ -65,13 +66,23 @@
          "js": [
             "script/libary/jquery.js",
             "script/libary/jquery-confirm.min.js",
-            "script/subtitle/subtitleHandling.js",
-            "script/subtitle/subtitleObserver.js",
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/applieddigitalskills.js"
          ],
          "css": [
             "style/style.css",
             "style/jquery-confirm.min.css"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://courses.edx.org/*"],
+         "js": [
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
+            "./script/lib/id/edxId.js",
+            "./script/subtitle/edxSubtitle.js"
          ],
          "run_at": "document_end"
       }
@@ -95,5 +106,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.6.3"
+   "version": "2.6.4"
 }

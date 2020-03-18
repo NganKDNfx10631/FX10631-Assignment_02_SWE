@@ -104,13 +104,13 @@ async function getData(data)
       content: "GET Request",
       requestUrl: data.vi,
    }).then(data => {
-      vi = SubtitleHandling.parseYoutubeSub(data);
+      vi = SubtitleHandling.parseSubByRegex(data);
    });
    await sendMessagePromise({
       content: "GET Request",
       requestUrl: data.en,
    }).then(data => {
-      eng = SubtitleHandling.parseYoutubeSub(data);
+      eng = SubtitleHandling.parseSubByRegex(data);
    });
 }
 
