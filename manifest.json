@@ -32,8 +32,6 @@
       {
          "matches": ["https://www.udemy.com/*"],
          "js": [
-            "script/libary/jquery.js",
-            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/udemy-subtitle.js"
@@ -48,12 +46,8 @@
          "all_frames": true,
          "matches": ["https://www.youtube.com/embed/*"],
          "js": [
-            "script/libary/jquery.js",
-            "script/libary/jquery-confirm.min.js",
-            "script/lib/getData.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
-            "script/lib/notifycation.js",
             "script/subtitle/youtubeSubtitle.js"
          ],
          "css": [
@@ -64,8 +58,6 @@
       {
          "matches": ["https://applieddigitalskills.withgoogle.com/*"],
          "js": [
-            "script/libary/jquery.js",
-            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/applieddigitalskills.js"
@@ -81,8 +73,20 @@
          "js": [
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
+            "./script/lib/requestData.js",
             "./script/lib/id/edxId.js",
             "./script/subtitle/edxSubtitle.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://classroom.udacity.com/*"],
+         "js": [
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
+            "./script/lib/requestData.js",
+            "./script/subtitle/subtitleBase.js",
+            "./script/subtitle/udacitySubtitle.js"
          ],
          "run_at": "document_end"
       }
@@ -106,5 +110,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.6.4"
+   "version": "2.6.5"
 }

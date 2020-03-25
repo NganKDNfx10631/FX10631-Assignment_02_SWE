@@ -47,6 +47,7 @@ B3: Nhấn `Add New` để thêm phụ đề.
 | ------------- |-------------|
 | Youtube | youtube |
 | Applieddigitalskills | applieddigitalskills |
+| Edx | edx |
 
 ## FUNiX Onpage
 

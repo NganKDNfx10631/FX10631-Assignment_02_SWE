@@ -27,7 +27,7 @@ class EdxSubtitle {
       this.subtitleObserver = new subtitleObserver("#funixSubtitle");
       this.subtitleObserver.initData(this.data.vi, this.data.en);
       this.subtitleObserver.mode = mode;
-          
+
       this.initElement(parseInt(mode));
       this.subtitleObserver.startObserver($("video").get(0));
    }
