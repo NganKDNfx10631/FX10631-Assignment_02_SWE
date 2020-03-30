@@ -46,6 +46,11 @@
          "all_frames": true,
          "matches": ["https://www.youtube.com/embed/*"],
          "js": [
+            "script/libary/jquery.js",
+            "script/lib/getData.js",
+            "./script/lib/requestData.js",
+            "script/libary/jquery-confirm.min.js",
+            "script/lib/notifycation.js",           
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/youtubeSubtitle.js"
@@ -110,5 +115,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.6.5"
+   "version": "2.6.6"
 }
