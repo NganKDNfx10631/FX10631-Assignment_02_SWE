@@ -41,12 +41,12 @@ class OnpageTranslator {
 			else if(res.code === 200)
 			{
 				self.gotData(res.data);
-				if(res.data.selector.reload && !addEventReload)
+				if(res.data.selector.reload && !this.addEventReload)
 				{
 					$(res.data.selector.reloadSelector).click(function(event) {
 						self.init();
 					});
-					addEventReload = true;
+					this.addEventReload = true;
 				}
 			} else{
 				(new OldTranslator()).init();
