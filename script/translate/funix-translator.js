@@ -6,7 +6,18 @@ class OnpageTranslator {
 		let hostname = window.location.hostname;
 		let self = this;
 		getDomainList().then(res => {
-			if(res[hostname] !== undefined) self.init();
+			let selector = res[hostname];
+			if(selector)
+			{
+				if(selector.reload && !self.addEventReload)
+				{
+					$(selector.reloadSelector).click(function(event) {
+						self.init();
+					});
+					self.addEventReload = true;
+				}
+				self.init();
+			}
 			else (new OldTranslator()).init();
 		});
 	}
@@ -41,13 +52,13 @@ class OnpageTranslator {
 			else if(res.code === 200)
 			{
 				self.gotData(res.data);
-				if(res.data.selector.reload && !this.addEventReload)
-				{
-					$(res.data.selector.reloadSelector).click(function(event) {
-						self.init();
-					});
-					this.addEventReload = true;
-				}
+				// if(res.data.selector.reload && !this.addEventReload)
+				// {
+				// 	$(res.data.selector.reloadSelector).click(function(event) {
+				// 		self.init();
+				// 	});
+				// 	this.addEventReload = true;
+				// }
 			} else{
 				(new OldTranslator()).init();
 			}

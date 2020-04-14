@@ -4,6 +4,9 @@ class EdxSubtitle {
       this.parseSubtitle = SubtitleHandling.parseSubByRegex.bind(SubtitleHandling);
    }
    run(){
+      $("#sequence-list").click(() => {
+         this.initData();
+      });
       this.initData();
    }
    async initData(){

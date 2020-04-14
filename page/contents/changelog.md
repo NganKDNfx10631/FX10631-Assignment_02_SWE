@@ -1,4 +1,4 @@
-### What's New in version 2.6.6 ?
+### What's New in version 2.6.8 ?
 
 Hi !<br>
 You have successfully updated **FUNiX Passport**. Changes in this version:
@@ -8,6 +8,6 @@ You have successfully updated **FUNiX Passport**. Changes in this version:
 
 ##### Changed
 
-* Fix youtube subtitle bug (not Find jquery)
+* Fix edx reload bug.
 
 ##### Removed
