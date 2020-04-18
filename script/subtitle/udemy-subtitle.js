@@ -42,14 +42,14 @@ async function initData() {
          content: "GET Request",
          requestUrl: resAPI.data.en,
       }).then(data => {
-         eng = SubtitleHandling.parseSub(data);
+         eng = SubtitleHandling.parseSubByRegex(data);
       });
       // Get Viet sub
       await sendMessagePromise({
          content: "GET Request",
          requestUrl: resAPI.data.vi,
       }).then(data => {
-         vi = SubtitleHandling.parseSub(data);
+         vi = SubtitleHandling.parseSubByRegex(data);
       });
       udemySubtitleObserver.initData(vi , eng);
    }
