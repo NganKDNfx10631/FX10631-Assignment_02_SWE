@@ -120,6 +120,7 @@ class OnpageTranslator {
 		if(float) initMenuComponents();
 	}
 	waitContentLoad(data, float){
+		const LOAD_TIME = 100;
 		const self = this;
 		setTimeout(function(){
 			let dom = $(data.selector.selector);
@@ -129,7 +130,7 @@ class OnpageTranslator {
 			} else {
 				self.waitContentLoad(data, float);
 			}
-		}, 1000);
+		}, LOAD_TIME);
 	}
 	renderTranscriptEdx(res, video) {
 
