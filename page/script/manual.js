@@ -1,1 +1,0 @@
-(new MarkdownReader("page/contents/manual.md", "#content")).init();

@@ -43,6 +43,7 @@ async function initData() {
          requestUrl: resAPI.data.en,
       }).then(data => {
          eng = SubtitleHandling.parseSubByRegex(data);
+         if(eng.length == 0) eng = SubtitleHandling.parseSub(data);
       });
       // Get Viet sub
       await sendMessagePromise({
@@ -50,6 +51,7 @@ async function initData() {
          requestUrl: resAPI.data.vi,
       }).then(data => {
          vi = SubtitleHandling.parseSubByRegex(data);
+         if(vi.length == 0) vi = SubtitleHandling.parseSub(data);
       });
       udemySubtitleObserver.initData(vi , eng);
    }

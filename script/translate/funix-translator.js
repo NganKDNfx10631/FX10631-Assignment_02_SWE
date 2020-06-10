@@ -71,11 +71,11 @@ class OnpageTranslator {
 	      if(subtitleMode === "1")
 	   	{
 				Notifycation.confirmPageTranslate().then(res => {
-					if(res) self.render(data, res.float);
+					if(res) self.waitContentLoad(data, res.float);
 				});
 	   	} else if(subtitleMode === "0")
 	   	{
-	   		self.render(data, res.float);
+	   		self.waitContentLoad(data, res.float);
 	   	}
 		});
 	}
@@ -118,6 +118,18 @@ class OnpageTranslator {
 
 	   });
 		if(float) initMenuComponents();
+	}
+	waitContentLoad(data, float){
+		const self = this;
+		setTimeout(function(){
+			let dom = $(data.selector.selector);
+			let content = dom.length != 0 ?$(dom[0]).text() : "";
+			if(content && content != ""){
+				self.render(data, float);
+			} else {
+				self.waitContentLoad(data, float);
+			}
+		}, 1000);
 	}
 	renderTranscriptEdx(res, video) {
 
