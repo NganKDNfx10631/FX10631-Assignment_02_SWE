@@ -7,6 +7,7 @@
    "content_scripts":
    [
       {
+         "all_frames": true,
          "js": [
              "script/libary/jquery.js",
              "script/lib/getData.js",
@@ -74,6 +75,7 @@
          "run_at": "document_end"
       },
       {
+         "all_frames": true,
          "matches": ["https://courses.edx.org/*"],
          "js": [
             "./script/subtitle/lib/subtitleHandling.js",
@@ -115,5 +117,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.6.12"
+   "version": "2.7.0"
 }

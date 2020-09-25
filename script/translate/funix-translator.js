@@ -39,8 +39,8 @@ class OnpageTranslator {
 	   };
 		if(window.location.href.match("courses.edx.org/*"))
 		{
-			let index = this.getIndex("#sequence-list > li > button", "active");
-			let url = "courses.edx.org%2F" + window.location.pathname.split("/")[5] + "?page=" + index;
+			let id = window.location.pathname.split("/")[2].split("@")[2];
+			let url = "courses.edx.org%2F" + id;
 			request.requestBody.id = url;
 		}
 		let self = this;
