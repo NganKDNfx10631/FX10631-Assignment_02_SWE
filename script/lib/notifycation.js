@@ -61,12 +61,12 @@ class Notifycation {
                      resolve(2);
                   }
                },
-               off: {
-                  text: 'Keep original',
-                  action: function() {
-                     resolve(0);
-                  }
-               }
+               // off: {
+               //    text: 'Keep original',
+               //    action: function() {
+               //       resolve(0);
+               //    }
+               // }
             }
          });
       });

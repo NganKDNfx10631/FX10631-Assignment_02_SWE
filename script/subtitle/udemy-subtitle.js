@@ -5,8 +5,8 @@ let videoObserver, udemySubtitleObserver,
 let vi,
    eng,
    base;
-const caption = ".captions-display--captions-container--1-aQJ"
-direct_sub_node = '.captions-display--captions-cue-text--ECkJu';
+const caption = '[class^="captions-display--captions-container"]'
+direct_sub_node = '#funixSubtitle';
 
 async function initData() {
    vi = [];
@@ -111,9 +111,11 @@ function pageLoad(code) {
 function start(type, float) {
    udemySubtitleObserver.mode = type;
    // Add Subtitle Button
-   button.insertAfter("button[aria-label=\"Captions\"]");
+   button.insertAfter("div[data-purpose=\"captions-menu-button\"]");
+   $("#captions-menu").hide();
+   initSubnode();
 
-   turnSubtitleOn();
+   // turnSubtitleOn();
    if(float) initMenuComponents();
 }
 
@@ -130,6 +132,12 @@ function startObserver() {
          attributes: true
       });
    }
+}
+
+function initSubnode() {
+   const subtitleObject = $('<div class="captions-display--captions-container--1-aQJ"> <div class="captions-display--captions-cue-text--ECkJu" data-purpose="captions-cue-text" style="font-size: 26.36px; opacity: 0.75;" id="funixSubtitle"></div> </div>');
+   $(caption).hide();
+   $('[class^="video-player--video-wrapper"]').append(subtitleObject);
 }
 
 function initButton() {
@@ -154,14 +162,14 @@ function initButton() {
    });
 
    viBtn.click(function(event) {
-      turnSubtitleOn();
+      // turnSubtitleOn();
       setActiveButton(viBtn);
       $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
       udemySubtitleObserver.mode = 1;
    });
 
    engBtn.click(function(event) {
-      turnSubtitleOn();
+      // turnSubtitleOn();
       setActiveButton(engBtn);
       $(direct_sub_node).text(udemySubtitleObserver.oldSubtitle);
       udemySubtitleObserver.mode = 2;
@@ -176,7 +184,7 @@ function initButton() {
    list.append(viBtn);
    list.append(engBtn);
    list.append($("<li role=\"separator\" class=\" menu--menu--2Pw42 menu--item--2IgLt divider\"></li>"));
-   list.append(offBtn);
+   // list.append(offBtn);
    button.append(iconBtn);
    button.append(list);
 }
@@ -190,15 +198,15 @@ function setActiveButton(buttonActive) {
    button.removeClass("open");
 }
 
-function turnSubtitleOn() {
-   try {
-      let el = $("button[aria-label=\"Captions\"]").parent().find("ul > li > a")[4];
-      var evObj = document.createEvent('Events');
-      evObj.initEvent("click", true, false);
-      let out = el.dispatchEvent(evObj);
-   } catch (e) {
-      setTimeout(function() {
-         turnSubtitleOn();
-      }, 500);
-   }
-}
+// function turnSubtitleOn() {
+//    try {
+//       let el = $("div[data-purpose=\"captions-menu-button\"]").parent().find("ul > li > lable")[4];
+//       var evObj = document.createEvent('Events');
+//       evObj.initEvent("click", true, false);
+//       let out = el.dispatchEvent(evObj);
+//    } catch (e) {
+//       setTimeout(function() {
+//          turnSubtitleOn();
+//       }, 500);
+//    }
+// }
