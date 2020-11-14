@@ -10,10 +10,23 @@ class EdxSubtitle {
       this.initData();
    }
    async initData(){
+
+      // Number video
+      this.numbVi = 5;
+      
       let id = EdxId.getID();
       await RequestData.requestSubtitleData(this.cid, id, this.parseSubtitle)
       .then(res => {this.data = res});
       if(!this.data) return ;
+
+      this.data[1] = this.data;
+
+      let i = 2;
+      for (i = 2; i <= this.numbVi; i++){
+         await RequestData.requestSubtitleData(this.cid, id + "_" + i, this.parseSubtitle)
+         .then(res => {this.data[i] = res});
+         //alert(i + "---" + JSON.stringify(this.data[i]));
+      }
 
       getSettingData().then(res => {
          let subtitleMode = res.modeSubtitle;
@@ -27,17 +40,30 @@ class EdxSubtitle {
       })
    }
    startSubtitle(mode){
-      this.subtitleObserver = new subtitleObserver("#funixSubtitle");
-      this.subtitleObserver.initData(this.data.vi, this.data.en);
-      this.subtitleObserver.mode = mode;
+      let i = 1;
+      for (i = 1; i <= this.numbVi ; i++){
+         if (this.data[i]){
+            //alert('Add sub ' + i);
+            this.subtitleObserver = new subtitleObserver("#funixSubtitle" + i);
+            this.subtitleObserver.initData(this.data[i].vi, this.data[i].en);
+            this.subtitleObserver.mode = mode;
 
-      this.initElement(parseInt(mode));
-      this.subtitleObserver.startObserver($("video").get(0));
+            this.initElement(parseInt(mode), i);
+            this.subtitleObserver.startObserver($("video").get(i-1));
+         }
+      }
+
    }
-   initElement(mode){
-      $(".closed-captions").remove();
-      $(".toggle-captions").remove();
-      let subtitleEle = $('<div class="closed-captions is-visible" style="display: block;" lang="funix" id = "funixSubtitle"><div>');
+   initElement(mode , idx){
+      if (idx === 1) {
+         $(".closed-captions").remove();
+         $(".toggle-captions").remove();
+      }
+      
+      let funixsubid = "<div class='closed-captions is-visible' style='display: block;' lang='funix' id = 'funixSubtitle" + idx +  "'><div>";
+      let subtitleEle = $(funixsubid);
+
+      //let subtitleEle = $('<div class="closed-captions is-visible" style="display: block;" lang="funix" id = "funixSubtitle"><div>');
       let menuBtn = $('<button class="control subtitle" aria-disabled="false" title="FUNiX Subtitle" aria-label="FUNiX Subtitle"><span class="icon fa" aria-hidden="true"><img src="https://firebasestorage.googleapis.com/v0/b/funix-subtitle.appspot.com/o/funix-icon.png?alt=media&token=d87f1917-86c3-4359-b771-6c8768627e1c"></span></button>');
       let menuContainer = $('<div class="menu-container" id= "funixSubtitleMenu" role="application"> <ol class="langs-list menu"></ol> </div>');
 
@@ -82,10 +108,20 @@ class EdxSubtitle {
       menuContainer.find("ol").append(enBtn);
       menuContainer.find("ol").append(viBtn);
       menuContainer.find("ol").append(offBtn);
-      $(".video-wrapper").append(subtitleEle);
+
+      //$(".video-wrapper").append(subtitleEle);
+      let count = 0;
+      $(".video-wrapper").each(function(a){
+         count = count + 1;
+         if (count === idx) {
+            $(this).append(subtitleEle);
+         }
+      });
+
       $(".add-fullscreen").after(menuBtn);
       $(".lang.menu-container").after(menuContainer);
    }
+   
    setActiveBtn(btn){
       $("#funixSubtitleMenu .is-active").removeClass('is-active');
       $(btn).addClass('is-active');
