@@ -12,7 +12,7 @@ class EdxSubtitle {
    async initData(){
 
       // Number video
-      this.numbVi = 5;
+      this.numbVi = $("video").length;
       
       let id = EdxId.getID();
       await RequestData.requestSubtitleData(this.cid, id, this.parseSubtitle)
