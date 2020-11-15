@@ -118,8 +118,10 @@ class EdxSubtitle {
          }
       });
 
-      $(".add-fullscreen").after(menuBtn);
-      $(".lang.menu-container").after(menuContainer);
+      if (idx === 1) {
+         $(".add-fullscreen").after(menuBtn);
+         $(".lang.menu-container").after(menuContainer);
+      }
    }
    
    setActiveBtn(btn){
