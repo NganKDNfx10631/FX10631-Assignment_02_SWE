@@ -62,6 +62,24 @@
          "run_at": "document_end"
       },
       {
+        "all_frames": true,
+        "matches": ["https://player.vimeo.com/*"],
+        "js": [
+           "script/libary/jquery.js",
+           "script/lib/getData.js",
+           "./script/lib/requestData.js",
+           "script/libary/jquery-confirm.min.js",
+           "script/lib/notifycation.js",
+           "./script/subtitle/lib/subtitleHandling.js",
+           "./script/subtitle/lib/subtitleObserver.js",
+           "script/subtitle/vimeoSubtitle.js"
+        ],
+        "css": [
+           "style/jquery-confirm.min.css"
+        ],
+        "run_at": "document_end"
+     },
+      {
          "matches": ["https://applieddigitalskills.withgoogle.com/*"],
          "js": [
             "./script/subtitle/lib/subtitleHandling.js",
