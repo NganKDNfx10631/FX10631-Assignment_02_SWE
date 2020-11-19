@@ -6,8 +6,7 @@ $(document).ready(function() {
    initData();
 });
 
-function startObserver() {
-    console.log('vimeo startObserver');
+function startObserver() {    
    let video = $("video").get(0);
    if(video !== undefined)
    {
@@ -21,8 +20,6 @@ function startObserver() {
 
 function initData()
 {
-    console.log('init vimeo data');
-    console.log('video count: ' + $("video").length);
    let request = {
       content: "POST Request",
       requestUrl: "https://funix-subtitle.firebaseapp.com/get",
@@ -123,7 +120,6 @@ function setActiveButton(button) {
 }
 
 function getVideoID() {
-    console.log('path : ' + window.location.pathname);
    return (window.location.pathname).split("/").splice(-1)[0];
 }
 
