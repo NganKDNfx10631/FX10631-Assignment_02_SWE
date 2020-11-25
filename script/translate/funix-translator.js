@@ -120,7 +120,7 @@ class OnpageTranslator {
 		if(float) initMenuComponents();
 	}
 	waitContentLoad(data, float){
-		const LOAD_TIME = 100;
+		const LOAD_TIME = 2000;
 		const self = this;
 		setTimeout(function(){
 			let dom = $(data.selector.selector);
