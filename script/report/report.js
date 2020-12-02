@@ -46,4 +46,16 @@ function postReport(self) {
          self.hideLoading(true);
       });
    }));
+
+   let reportMail = {
+      toemail: data.email
+   };
+
+   let requestSendMail = {
+      content: "POST Request",
+      requestUrl: "https://funix-onpage-translator.firebaseapp.com/send-email-ticket",
+      requestBody: reportMail
+   };
+   chrome.runtime.sendMessage(requestSendMail, res => {
+   });
 }
