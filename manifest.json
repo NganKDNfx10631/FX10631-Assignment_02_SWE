@@ -93,6 +93,19 @@
          "run_at": "document_end"
       },
       {
+         "matches": ["https://www.coursera.org/*"],
+         "js": [
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
+            "./script/subtitle/courseraSubtitle.js"
+         ],
+         "css": [
+            "style/style.css",
+            "style/jquery-confirm.min.css"
+         ],
+         "run_at": "document_end"
+      },
+      {
          "all_frames": true,
          "matches": ["https://courses.edx.org/*"],
          "js": [
