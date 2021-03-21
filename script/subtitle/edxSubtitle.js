@@ -45,7 +45,7 @@ class EdxSubtitle {
          if (this.data[i]){
             //alert('Add sub ' + i);
             this.subtitleObserver = new subtitleObserver("#funixSubtitle" + i);
-            this.subtitleObserver.initData(this.data[i].vi, this.data[i].en);
+            this.subtitleObserver.initData(this.data[i].vi, this.data[i].en, this.data[i].jp);
             this.subtitleObserver.mode = mode;
 
             this.initElement(parseInt(mode), i);
