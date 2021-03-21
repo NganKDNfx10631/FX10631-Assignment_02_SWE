@@ -5,9 +5,10 @@ class subtitleObserver {
       //    this.changeSubtitle();
       // }).bind(this));
    }
-   initData(vi, eng){
+   initData(vi, eng, jp){
       this.dictEng = eng;
       this.dictVi = vi;
+      this.dictJp = jp;
    }
    changeSubtitle(){
       let $captionNode = $(this.direct_sub_node);
@@ -16,10 +17,19 @@ class subtitleObserver {
       if (this.mode === 0) {
          return;
       } else if (this.mode === 1) {
-         translatedOb = this.dictVi.find(el => (el.start <= time && el.end >= time));
+         if (this.dictVi != undefined) {
+            translatedOb = this.dictVi.find(el => (el.start <= time && el.end >= time));
+         }
       } else if (this.mode === 2) {
-         translatedOb = this.dictEng.find(el => (el.start <= time && el.end >= time));
-      } else {
+         if (this.dictEng != undefined) {
+            translatedOb = this.dictEng.find(el => (el.start <= time && el.end >= time));
+         }
+      } else if (this.mode === 3) {
+         if (this.dictJp != undefined) {
+            translatedOb = this.dictJp.find(el => (el.start <= time && el.end >= time));
+         }
+      }
+       else {
          return;
       }
       if (translatedOb !== undefined) {

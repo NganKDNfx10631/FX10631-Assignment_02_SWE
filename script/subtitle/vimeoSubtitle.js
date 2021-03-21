@@ -1,4 +1,4 @@
-let youtubeSubtitle, vi, bs, eng,
+let youtubeSubtitle, vi, bs, eng, jp,
     iconBtn, viBtn, engBtn, offBtn, settingMenu,
     captionNode;
 
@@ -33,7 +33,7 @@ function initData()
       {
          getData(res.data).then(() => {
             vimeoSubtitle = new subtitleObserver("#funix-text .ytp-caption-segment");
-            vimeoSubtitle.initData(vi, eng);
+            vimeoSubtitle.initData(vi, eng, jp);
             showConfirm();
          });
       }
@@ -104,13 +104,23 @@ async function getData(data)
       content: "GET Request",
       requestUrl: data.vi,
    }).then(data => {
-      vi = SubtitleHandling.parseSubByRegex(data);
+      if (data != undefined) {
+         vi = SubtitleHandling.parseSubByRegex(data);
+      }
    });
+   // await sendMessagePromise({
+   //    content: "GET Request",
+   //    requestUrl: data.en,
+   // }).then(data => {
+   //    eng = SubtitleHandling.parseSubByRegex(data);
+   // });
    await sendMessagePromise({
       content: "GET Request",
-      requestUrl: data.en,
+      requestUrl: data.jp,
    }).then(data => {
-      eng = SubtitleHandling.parseSubByRegex(data);
+      if (data != undefined) {
+         jp = SubtitleHandling.parseSubByRegex(data);
+      }
    });
 }
 

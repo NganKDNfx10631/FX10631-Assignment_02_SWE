@@ -55,12 +55,20 @@ class Notifycation {
                      resolve(1);
                   }
                },
-               eng: {
-                  text: 'English',
+               // eng: {
+               //    text: 'English',
+               //    action: function() {
+               //       resolve(2);
+               //    }
+               // },
+
+               jp: {
+                  text: 'Japanese',
                   action: function() {
-                     resolve(2);
+                     resolve(3);
                   }
                },
+
                // off: {
                //    text: 'Keep original',
                //    action: function() {

@@ -4,6 +4,7 @@ let videoObserver, udemySubtitleObserver,
    pathname = window.location.pathname;
 let vi,
    eng,
+   jp,
    base;
 const caption = '[class^="captions-display--captions-container"]'
 direct_sub_node = '#funixSubtitle';
@@ -11,6 +12,7 @@ direct_sub_node = '#funixSubtitle';
 async function initData() {
    vi = [];
    eng = [];
+   jp = [];
    // Get data
    let params = window.location.pathname.split("/");
    let body = {};
@@ -53,7 +55,19 @@ async function initData() {
          vi = SubtitleHandling.parseSubByRegex(data);
          if(vi.length == 0) vi = SubtitleHandling.parseSub(data);
       });
-      udemySubtitleObserver.initData(vi , eng);
+
+      // Get Jp sub
+      await sendMessagePromise({
+         content: "GET Request",
+         requestUrl: resAPI.data.jp,
+      }).then(data => {
+         if (data != undefined) {
+            jp = SubtitleHandling.parseSubByRegex(data);
+            if(jp.length == 0) jp = SubtitleHandling.parseSub(data);
+         }
+      });
+
+      udemySubtitleObserver.initData(vi , eng, jp);
    }
    return resAPI.code;
 }

@@ -30,16 +30,20 @@ class SubtitleHandling {
       let pattern = /(\d+)\n([\d:,]+)\s+-{2}\>\s+([\d:,]+)\n([\s\S]*?(?=\n{2}|$))\n([\s\S]*?(?=\n{2}|$))/gm;
       let _regExp = new RegExp(pattern);
       let matches;
+      if (f !== undefined) {
+         f = f.replace(/\r\n|\r|\n/g, '\n')
 
-      f = f.replace(/\r\n|\r|\n/g, '\n')
-
-      while ((matches = pattern.exec(f)) != null) {
-         result.push({
-            start: this.timeToMillisecond(matches[2].trim()),
-            end: this.timeToMillisecond(matches[3].trim()),
-            text: matches[4] +"\r\n"+ matches[5]
-         });
+         while ((matches = pattern.exec(f)) != null) {
+            result.push({
+               start: this.timeToMillisecond(matches[2].trim()),
+               end: this.timeToMillisecond(matches[3].trim()),
+               text: matches[4] +"\r\n"+ matches[5]
+            });
+         }
+      } else {
+         console.log("Error parse sub");
       }
+      
       return result;
    }
 

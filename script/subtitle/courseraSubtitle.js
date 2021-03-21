@@ -1,4 +1,4 @@
-let courseraSubtitleObserver,vi, eng;
+let courseraSubtitleObserver,vi, eng, jp;
 function initComponent(){
    // alert("coursera init");
    initData().then((status) => {
@@ -28,7 +28,7 @@ function createElement(mode){
       //courseraSubtitleObserver = new subtitleObserver("#funix-text .ytp-caption-segment");
       courseraSubtitleObserver = new subtitleObserver("#funix-text");
       // alert(JSON.stringify(vi));
-      courseraSubtitleObserver.initData(vi, eng);
+      courseraSubtitleObserver.initData(vi, eng, jp);
       courseraSubtitleObserver.mode = mode;
          
       startObserver();
@@ -77,7 +77,9 @@ function createElement(mode){
             requestUrl: resAPI.data.vi,
          }).then(data => {
             // alert("data : " + JSON.stringify(data));
-            vi = SubtitleHandling.parseSubByRegex(data);
+            if (data != undefined){
+               vi = SubtitleHandling.parseSubByRegex(data);
+            }
          });
          // await sendMessagePromise({
          //    content: "GET Request",
@@ -85,6 +87,16 @@ function createElement(mode){
          // }).then(data => {
          //    self.en = SubtitleHandling.parseSub(data);
          // });
+
+         await sendMessagePromise({
+            content: "GET Request",
+            requestUrl: resAPI.data.jp,
+         }).then(data => {
+            if (data != undefined){
+               self.jp = SubtitleHandling.parseSubByRegex(data);
+            }
+         });
+
          return true;
       }
       return false;
