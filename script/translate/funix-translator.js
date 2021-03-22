@@ -43,7 +43,21 @@ class OnpageTranslator {
 			let url = "courses.edx.org%2F" + id;
 			request.requestBody.id = url;
 		}
+
+		let urlId = request.requestBody.id + "_JP";
+		let requestJP = {
+			content: "POST Request",
+			requestUrl: "https://translation.funix.edu.vn/get-data",
+			requestBody: {
+			   id: urlId
+			}
+		 };
+
 		let self = this;
+		let dataVN , dataJP;
+		let isVN = new Boolean(false);
+		let isJP = new Boolean(false);
+		
 	   chrome.runtime.sendMessage(request, res => {
 			if(res === null)
 			{
@@ -51,7 +65,9 @@ class OnpageTranslator {
 			}
 			else if(res.code === 200)
 			{
-				self.gotData(res.data);
+				isVN = true;
+				dataVN = res.data;
+				//self.gotData(res.data);
 				// if(res.data.selector.reload && !this.addEventReload)
 				// {
 				// 	$(res.data.selector.reloadSelector).click(function(event) {
@@ -62,21 +78,46 @@ class OnpageTranslator {
 			} else{
 				(new OldTranslator()).init();
 			}
+			chrome.runtime.sendMessage(requestJP, res2 => {
+				if(res2 === null)
+				{
+					(new OldTranslator()).init();
+				}
+				else if(res2.code === 200)
+				{
+					isJP = true;
+					dataJP = res2.data;
+				} else{
+					(new OldTranslator()).init();
+				}
+				if ((isVN === true) || (isJP === true)) {
+					self.gotData(dataVN, dataJP, isVN, isJP);
+				}
+			   });
 	   });
 	}
-	gotData(data) {
+	gotData(dataVN, dataJP, isVN, isJP) {
 		let self = this;
+		
 		getSettingData().then(res => {
 			let subtitleMode = res.modeSubtitle;
-	      if(subtitleMode === "1")
-	   	{
-				Notifycation.confirmPageTranslate().then(res => {
-					if(res) self.waitContentLoad(data, res.float);
+			if(subtitleMode === "1")
+			{
+				Notifycation.confirmPageTranslate().then(result => {
+					if (result === 1) {
+						self.waitContentLoad(dataVN, res.float);
+					} else if (result === 2) {
+						self.waitContentLoad(dataJP, res.float);
+					}
 				});
-	   	} else if(subtitleMode === "0")
-	   	{
-	   		self.waitContentLoad(data, res.float);
-	   	}
+			} else if(subtitleMode === "0")
+			{
+				if (isVN){
+					self.waitContentLoad(dataVN, res.float);	   
+				} else {
+					self.waitContentLoad(dataJP, res.float);
+				}
+			}
 		});
 	}
 	render(data, float) {

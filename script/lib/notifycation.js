@@ -91,14 +91,22 @@ class Notifycation {
    			boxWidth: '500px',
    			useBootstrap: false,
    			buttons: {
-   				Yes: {
+   				vi: {
+                  text: 'Vietnamese',
    					action: function() {
-   						resolve(true);
+   						resolve(1);
+   					}
+               },
+               jp: {
+                  text: 'Japanese',
+   					action: function() {
+   						resolve(2);
    					}
    				},
    				No: {
+                  text: 'Cancel',
    					action: function() {
-                     resolve(false);
+                     resolve(3);
 						}
    				}
    			}
