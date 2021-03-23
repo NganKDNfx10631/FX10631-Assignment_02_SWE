@@ -9,7 +9,7 @@ function initComponent(){
             let subtitleMode = res.modeSubtitle;
             if (subtitleMode === "1") {
                Notifycation.confirmSubtitle().then(mode => {
-                  if(mode != 0)
+                  if(mode !== 0)
                   {
                      createElement(mode);
                   }
@@ -77,7 +77,7 @@ function createElement(mode){
             requestUrl: resAPI.data.vi,
          }).then(data => {
             // alert("data : " + JSON.stringify(data));
-            if (data != undefined){
+            if (data !== undefined) {
                vi = SubtitleHandling.parseSubByRegex(data);
             }
          });
@@ -92,8 +92,8 @@ function createElement(mode){
             content: "GET Request",
             requestUrl: resAPI.data.jp,
          }).then(data => {
-            if (data != undefined){
-               self.jp = SubtitleHandling.parseSubByRegex(data);
+            if (data !== undefined) {
+               jp = SubtitleHandling.parseSubByRegex(data);
             }
          });
 

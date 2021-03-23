@@ -17,15 +17,15 @@ class subtitleObserver {
       if (this.mode === 0) {
          return;
       } else if (this.mode === 1) {
-         if (this.dictVi != undefined) {
+         if (this.dictVi !== undefined) {
             translatedOb = this.dictVi.find(el => (el.start <= time && el.end >= time));
          }
       } else if (this.mode === 2) {
-         if (this.dictEng != undefined) {
+         if (this.dictEng !== undefined) {
             translatedOb = this.dictEng.find(el => (el.start <= time && el.end >= time));
          }
       } else if (this.mode === 3) {
-         if (this.dictJp != undefined) {
+         if (this.dictJp !== undefined) {
             translatedOb = this.dictJp.find(el => (el.start <= time && el.end >= time));
          }
       }

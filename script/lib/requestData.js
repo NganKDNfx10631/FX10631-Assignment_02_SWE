@@ -13,7 +13,7 @@ class RequestData {
       await sendMessagePromise(request).then(res => {
          resAPI = res;
       });
-      if(resAPI.code != 200) return null;
+      if(resAPI.code !== 200) return null;
       let out = {};
       await sendMessagePromise({
          content: "GET Request",

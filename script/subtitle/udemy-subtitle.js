@@ -61,7 +61,7 @@ async function initData() {
          content: "GET Request",
          requestUrl: resAPI.data.jp,
       }).then(data => {
-         if (data != undefined) {
+         if (data !== undefined) {
             jp = SubtitleHandling.parseSubByRegex(data);
             if(jp.length == 0) jp = SubtitleHandling.parseSub(data);
          }

@@ -33,7 +33,7 @@ class SubtitleHandling {
       if (f !== undefined) {
          f = f.replace(/\r\n|\r|\n/g, '\n')
 
-         while ((matches = pattern.exec(f)) != null) {
+         while ((matches = pattern.exec(f)) !== null) {
             result.push({
                start: this.timeToMillisecond(matches[2].trim()),
                end: this.timeToMillisecond(matches[3].trim()),

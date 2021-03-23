@@ -116,7 +116,7 @@ async function getData(data)
       content: "GET Request",
       requestUrl: data.jp,
    }).then(data => {
-      if (data != undefined) {
+      if (data !== undefined) {
          jp = SubtitleHandling.parseSubByRegex(data);
       }
    });

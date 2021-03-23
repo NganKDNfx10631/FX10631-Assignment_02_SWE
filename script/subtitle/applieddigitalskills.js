@@ -11,7 +11,7 @@ class Applieddigitalskills {
                let subtitleMode = res.modeSubtitle;
                if (subtitleMode === "1") {
                   Notifycation.confirmSubtitle().then(mode => {
-                     if(mode != 0)
+                     if(mode !== 0)
                      {
                         this.createElement(mode);
                      }
