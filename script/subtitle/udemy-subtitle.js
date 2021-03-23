@@ -84,7 +84,7 @@ $(document).ready(function() {
 
 function initComponents() {
    // Setup Subtitle button
-   initButton();
+   //initButton();----remove
 
    //Observe the paragraph
    udemySubtitleObserver = new subtitleObserver(direct_sub_node);
@@ -103,7 +103,7 @@ function initComponents() {
 
 function pageLoad(code) {
    // Pause video;
-   $("button[aria-label=\"Pause\"]").trigger("click");
+   // $("button[aria-label=\"Pause\"]").trigger("click");----remove
    startObserver();
    if (code === 200) {
       getSettingData().then(res => {
@@ -111,12 +111,12 @@ function pageLoad(code) {
          if (subtitleMode === "1") {
             Notifycation.confirmSubtitle().then(mode => {
                start(mode, res.float);
-               setActiveButton([offBtn, viBtn, engBtn][mode]);
+               // setActiveButton([offBtn, viBtn, engBtn][mode]);----remove
             });
          } else if (subtitleMode === "0") {
             start(1, res.float);
          } else if (subtitleMode === "2") {
-            setActiveButton(offBtn);
+            //setActiveButton(offBtn);----remove
          }
       });
    }
@@ -125,7 +125,7 @@ function pageLoad(code) {
 function start(type, float) {
    udemySubtitleObserver.mode = type;
    // Add Subtitle Button
-   button.insertAfter("div[data-purpose=\"captions-menu-button\"]");
+   //button.insertAfter("div[data-purpose=\"captions-menu-button\"]");----remove
    $("#captions-menu").hide();
    initSubnode();
 
