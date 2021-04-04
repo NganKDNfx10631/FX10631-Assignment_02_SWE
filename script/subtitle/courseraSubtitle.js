@@ -23,7 +23,6 @@ function initComponent() {
 
 function checkURLchange(currentURL){
    if(currentURL != oldURL){
-       //alert("url changed! to : " + currentURL);
        oldURL = currentURL;
        initComponent();
    }
@@ -87,31 +86,98 @@ function createElement(mode){
       });
       if(resAPI.code === 200)
       {
-         await sendMessagePromise({
-            content: "GET Request",
-            requestUrl: resAPI.data.vi,
-         }).then(data => {
-            // alert("data : " + JSON.stringify(data));
-            if (data !== undefined) {
-               vi = SubtitleHandling.parseSubByRegex(data);
+         // check duplicate id
+         if (resAPI.data.numb !== undefined) {
+            let pathFile = window.location.pathname;
+            let numb = resAPI.data.numb;
+            let isNew = "1"; 
+            for (var i = 1; i <= numb; i++) {
+               let request2 = {
+                  content: "POST Request",
+                  requestUrl: "https://funix-subtitle.firebaseapp.com/get",
+                  requestBody: {
+                     cid: "coursera",
+                     lid: id + "_" + i.toString()
+                  }
+               };
+               let resAPI2 = {};
+               await sendMessagePromise(request2).then(res => {
+                  resAPI2 = res;
+               });
+               if(resAPI2.code === 200) {
+                  if (resAPI2.data.url !== undefined && resAPI2.data.url.includes(pathFile)) {
+                     await sendMessagePromise({
+                        content: "GET Request",
+                        requestUrl: resAPI2.data.vi,
+                     }).then(data => {
+                        if (data !== undefined) {
+                           vi = SubtitleHandling.parseSubByRegex(data);
+                        }
+                     });
+         
+                     await sendMessagePromise({
+                        content: "GET Request",
+                        requestUrl: resAPI2.data.jp,
+                     }).then(data => {
+                        if (data !== undefined) {
+                           jp = SubtitleHandling.parseSubByRegex(data);
+                        }
+                     });
+                     isNew = "2";
+                  }
+               }
             }
-         });
-         // await sendMessagePromise({
-         //    content: "GET Request",
-         //    requestUrl: resAPI.data.en,
-         // }).then(data => {
-         //    self.en = SubtitleHandling.parseSub(data);
-         // });
+            if (isNew === "2") {
 
-         await sendMessagePromise({
-            content: "GET Request",
-            requestUrl: resAPI.data.jp,
-         }).then(data => {
-            if (data !== undefined) {
-               jp = SubtitleHandling.parseSubByRegex(data);
             }
-         });
+            else {
+               await sendMessagePromise({
+                  content: "GET Request",
+                  requestUrl: resAPI.data.vi,
+               }).then(data => {
+                  if (data !== undefined) {
+                     vi = SubtitleHandling.parseSubByRegex(data);
+                  }
+               });
+   
+               await sendMessagePromise({
+                  content: "GET Request",
+                  requestUrl: resAPI.data.jp,
+               }).then(data => {
+                  if (data !== undefined) {
+                     jp = SubtitleHandling.parseSubByRegex(data);
+                  }
+               });
+            }
 
+         } else {
+
+            await sendMessagePromise({
+               content: "GET Request",
+               requestUrl: resAPI.data.vi,
+            }).then(data => {
+               // alert("data : " + JSON.stringify(data));
+               if (data !== undefined) {
+                  vi = SubtitleHandling.parseSubByRegex(data);
+               }
+            });
+            // await sendMessagePromise({
+            //    content: "GET Request",
+            //    requestUrl: resAPI.data.en,
+            // }).then(data => {
+            //    self.en = SubtitleHandling.parseSub(data);
+            // });
+
+            await sendMessagePromise({
+               content: "GET Request",
+               requestUrl: resAPI.data.jp,
+            }).then(data => {
+               if (data !== undefined) {
+                  jp = SubtitleHandling.parseSubByRegex(data);
+               }
+            });
+         
+         }
          return true;
       }
       return false;
