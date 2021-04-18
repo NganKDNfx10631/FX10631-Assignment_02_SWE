@@ -191,6 +191,8 @@ class OnpageTranslator {
 			$(".tc-wrapper").html("");
 			$($(".tc-wrapper").parent()).html(video);
 			$("ol.subtitles-menu").html(subtitle.html());
+
+			(new EdxSubtitle()).run();
 		}
 	}
 }

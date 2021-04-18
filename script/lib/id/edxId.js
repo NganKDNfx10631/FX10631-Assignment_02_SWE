@@ -1,7 +1,13 @@
 class EdxId {
    static getID(){
-		const id = window.location.pathname.split("/")[2].split("@")[2];
-      return id;
+	   if (window.location.pathname !== undefined) {
+		   const subId = window.location.pathname.split("/")[2];
+		   if (subId !== undefined) {
+				const id = subId.split("@")[2];
+				return id;
+		   }
+	   }
+	return "";
    }
    static getIndex(domSelector, activeClass) {
 		let list = $(domSelector);
