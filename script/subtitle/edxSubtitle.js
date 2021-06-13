@@ -131,5 +131,32 @@ class EdxSubtitle {
 }
 
 $(document).ready(function() {
-   (new EdxSubtitle()).run();
+
+   let request = {
+      content: "POST Request",
+      requestUrl: "https://translation.funix.edu.vn/get-data",
+      requestBody: {
+         id: encodeURIComponent(window.location.href)
+      }
+   };
+   if(window.location.href.match("courses.edx.org/*"))
+   {
+      let id = window.location.pathname.split("/")[2].split("@")[2];
+      let url = "courses.edx.org%2F" + id;
+      request.requestBody.id = url;
+   }
+
+   let check = true;
+
+   chrome.runtime.sendMessage(request, res => {
+      if(res.code === 200)
+      {
+         check = false;
+      }
+      if (check === true) {
+         (new EdxSubtitle()).run();
+      }else {
+      }
+   });
+   
 });
