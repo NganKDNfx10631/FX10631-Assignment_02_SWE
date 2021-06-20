@@ -4,18 +4,19 @@ function initComponent() {
       if(status)
       {
          getSettingData().then(res => {
-
+            
             let subtitleMode = res.modeSubtitle;
-            if (subtitleMode === "1") {
+            if (subtitleMode === "0") {
                Notifycation.confirmSubtitle().then(mode => {
                   if(mode !== 0)
                   {
                      createElement(mode);
                   }
                });
-            } else if (subtitleMode === "0") {
-               createElement(1);
-            } else if (subtitleMode === "2") {}
+            } 
+            // else if (subtitleMode === "0") {
+            //    createElement(1);
+            // } else if (subtitleMode === "2") {}
          })
       }
    });

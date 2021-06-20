@@ -101,7 +101,7 @@ class OnpageTranslator {
 		
 		getSettingData().then(res => {
 			let subtitleMode = res.modeSubtitle;
-			if(subtitleMode === "1")
+			if(subtitleMode === "0")
 			{
 				Notifycation.confirmPageTranslate().then(result => {
 					if (result === 1) {
@@ -110,14 +110,15 @@ class OnpageTranslator {
 						self.waitContentLoad(dataJP, res.float);
 					}
 				});
-			} else if(subtitleMode === "0")
-			{
-				if (isVN){
-					self.waitContentLoad(dataVN, res.float);	   
-				} else {
-					self.waitContentLoad(dataJP, res.float);
-				}
-			}
+			} 
+			// else if(subtitleMode === "0")
+			// {
+			// 	if (isVN){
+			// 		self.waitContentLoad(dataVN, res.float);	   
+			// 	} else {
+			// 		self.waitContentLoad(dataJP, res.float);
+			// 	}
+			// }
 		});
 	}
 	render(data, float) {

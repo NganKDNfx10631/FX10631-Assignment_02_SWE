@@ -8,13 +8,17 @@ class SubtitleBase {
       if(!this.data) return ;
       getSettingData().then(res => {
          let subtitleMode = res.modeSubtitle;
-         if (subtitleMode === "1") {
+         if (subtitleMode === "0") {
             Notifycation.confirmSubtitle().then(mode => {
-               this.startSubtitle(mode);
+               if(mode !== 0)
+               {
+                  this.startSubtitle(mode);
+               }
             });
-         } else if (subtitleMode === "0") {
-            this.startSubtitle(1);
-         } else if (subtitleMode === "2") {}
+         } 
+         // else if (subtitleMode === "0") {
+         //    this.startSubtitle(1);
+         // } else if (subtitleMode === "2") {}
       })
    }
    run(){

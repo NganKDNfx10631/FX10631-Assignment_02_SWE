@@ -179,5 +179,5 @@
    "name": "FUNiX Passport Offshop",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.6.24"
+   "version": "3.0.1"
 }

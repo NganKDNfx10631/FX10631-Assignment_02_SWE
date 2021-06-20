@@ -108,16 +108,20 @@ function pageLoad(code) {
    if (code === 200) {
       getSettingData().then(res => {
          let subtitleMode = res.modeSubtitle;
-         if (subtitleMode === "1") {
+         if (subtitleMode === "0") {
             Notifycation.confirmSubtitle().then(mode => {
-               start(mode, res.float);
+               if(mode !== 0)
+               {
+                  start(mode, res.float);
+               }
                // setActiveButton([offBtn, viBtn, engBtn][mode]);----remove
             });
-         } else if (subtitleMode === "0") {
-            start(1, res.float);
-         } else if (subtitleMode === "2") {
-            //setActiveButton(offBtn);----remove
-         }
+         } 
+         // else if (subtitleMode === "0") {
+         //    start(1, res.float);
+         // } else if (subtitleMode === "2") {
+         //    //setActiveButton(offBtn);----remove
+         // }
       });
    }
 }

@@ -37,15 +37,16 @@ class OldTranslator {
 		let self = this;
 		getSettingData().then(res => {
 			let subtitleMode = res.modeSubtitle;
-	      if(subtitleMode === "1")
+	      if(subtitleMode === "0")
 	   	{
 				Notifycation.confirmPageTranslate().then(res => {
 					if(res) self.render(snippets, res.float);
 				});
-	   	} else if(subtitleMode === "0")
-	   	{
-				self.render(snippets, res.float);
-	   	}
+		} 
+		// else if(subtitleMode === "0")
+	   	// {
+		// 		self.render(snippets, res.float);
+	   	// }
 		});
 	}
 	render(snippets, float) {

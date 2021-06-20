@@ -78,23 +78,27 @@ function showConfirm()
 {
    getSettingData().then(res => {
       let subtitleMode = res.modeSubtitle;
-      if (subtitleMode === "1") {
+      if (subtitleMode === "0") {
          Notifycation.confirmSubtitle().then(mode => {
-            youtubeSubtitle.mode = mode;
-            initButton();
-            setActiveButton([offBtn, viBtn, engBtn][mode]);
-            startObserver();
-            initVisibleSubtitle();
+            if(mode !== 0)
+            {
+               youtubeSubtitle.mode = mode;
+               initButton();
+               setActiveButton([offBtn, viBtn, engBtn][mode]);
+               startObserver();
+               initVisibleSubtitle();
+            }
          });
-      } else if (subtitleMode === "0") {
-         youtubeSubtitle.mode = 1;
-         initButton();
-         setActiveButton(viBtn);
-         startObserver();
-         initVisibleSubtitle();
-      } else if (subtitleMode === "2") {
-         setActiveButton(offBtn);
-      }
+      } 
+      // else if (subtitleMode === "0") {
+      //    youtubeSubtitle.mode = 1;
+      //    initButton();
+      //    setActiveButton(viBtn);
+      //    startObserver();
+      //    initVisibleSubtitle();
+      // } else if (subtitleMode === "2") {
+      //    setActiveButton(offBtn);
+      // }
    });
 }
 

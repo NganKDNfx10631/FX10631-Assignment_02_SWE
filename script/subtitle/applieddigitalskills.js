@@ -9,16 +9,17 @@ class Applieddigitalskills {
          {
             getSettingData().then(res => {
                let subtitleMode = res.modeSubtitle;
-               if (subtitleMode === "1") {
+               if (subtitleMode === "0") {
                   Notifycation.confirmSubtitle().then(mode => {
                      if(mode !== 0)
                      {
                         this.createElement(mode);
                      }
                   });
-               } else if (subtitleMode === "0") {
-                  this.createElement(1);
-               } else if (subtitleMode === "2") {}
+               } 
+               // else if (subtitleMode === "0") {
+               //    this.createElement(1);
+               // } else if (subtitleMode === "2") {}
             })
          }
       });
