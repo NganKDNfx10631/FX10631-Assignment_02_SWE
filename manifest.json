@@ -124,6 +124,19 @@
          "run_at": "document_end"
       },
       {
+         "matches": ["https://edu.google.com/*"],
+         "js": [
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
+            "script/subtitle/edugoogle.js"
+         ],
+         "css": [
+            "style/style.css",
+            "style/jquery-confirm.min.css"
+         ],
+         "run_at": "document_end"
+      },
+      {
          "matches": ["https://www.coursera.org/*"],
          "js": [
             "./script/subtitle/lib/subtitleHandling.js",
