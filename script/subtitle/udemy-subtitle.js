@@ -153,7 +153,7 @@ function startObserver() {
 }
 
 function initSubnode() {
-   const subtitleObject = $('<div class="captions-display--captions-container--1-aQJ"> <div class="captions-display--captions-cue-text--ECkJu" data-purpose="captions-cue-text" style="font-size: 26.36px; opacity: 0.75;" id="funixSubtitle"></div> </div>');
+   const subtitleObject = $('<div class="captions-display--captions-container--1-aQJ"> <div class="captions-display--captions-cue-text--ECkJu" data-purpose="captions-cue-text" style="font-size: 26.36px; opacity: 0.75;justify-content: center;text-align: center;" id="funixSubtitle"></div> </div>');
    $(caption).hide();
    $('[class^="video-player--video-wrapper"]').append(subtitleObject);
 }
