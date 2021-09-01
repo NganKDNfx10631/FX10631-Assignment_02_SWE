@@ -33,6 +33,7 @@
       {
          "matches": ["https://www.udemy.com/*"],
          "js": [
+            "script/libary/jquery.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/udemy-subtitle.js"
@@ -46,6 +47,7 @@
       {
          "matches": ["https://fpt-software.udemy.com/*"],
          "js": [
+            "script/libary/jquery.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/udemy-subtitle.js"
@@ -113,6 +115,7 @@
       {
          "matches": ["https://applieddigitalskills.withgoogle.com/*"],
          "js": [
+            "script/libary/jquery.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/applieddigitalskills.js"
@@ -126,6 +129,7 @@
       {
          "matches": ["https://edu.google.com/*"],
          "js": [
+            "script/libary/jquery.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/edugoogle.js"
@@ -139,6 +143,7 @@
       {
          "matches": ["https://www.coursera.org/*"],
          "js": [
+            "script/libary/jquery.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "./script/subtitle/courseraSubtitle.js"
@@ -153,6 +158,7 @@
          "all_frames": true,
          "matches": ["https://courses.edx.org/*"],
          "js": [
+            "script/libary/jquery.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "./script/lib/requestData.js",
@@ -164,6 +170,7 @@
       {
          "matches": ["https://classroom.udacity.com/*"],
          "js": [
+            "script/libary/jquery.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "./script/lib/requestData.js",
@@ -187,10 +194,9 @@
       "64": "icon/funix-passport-icon-64x64.png",
       "128": "icon/funix-passport-icon-128x128.png"
    },
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoQZDBBra2X8pb87VP2pFSRKFsbh0lBoo/pvahfUt9dAQJSYYroBIOi3YJ+56CQpYsA/JXyk02/MG0QdeHESfntYQ7XPX8VwgKIyrLE2aCSSg/EfxqYDoLUeMVmhoH0hMac7GInuxEL2ELPa0kpENdFK/xMdGtcfXhaw1CuheATDcice2E55ojI2jZCdj5t/DrIB9O+k0P3sX0hF+qh9+3sMjAmkA1JfcZarsc5Sojhdk7T3TJSULCJXvXEafFF+ZnYEEkDpEbXQfM3mFSFQnl55vEWAjN2E30cTC+jrbhTXvVe9c0/MOo5jzur8/kG+2lRjQUGDo2E4T8jej3kl0JQIDAQAB",
    "manifest_version": 2,
-   "name": "FUNiX Passport Offshop",
+   "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "3.0.1"
+   "version": "3.0.4"
 }
