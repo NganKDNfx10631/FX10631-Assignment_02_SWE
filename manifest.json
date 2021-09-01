@@ -34,6 +34,7 @@
          "matches": ["https://www.udemy.com/*"],
          "js": [
             "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/udemy-subtitle.js"
@@ -48,6 +49,7 @@
          "matches": ["https://fpt-software.udemy.com/*"],
          "js": [
             "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/udemy-subtitle.js"
@@ -116,6 +118,7 @@
          "matches": ["https://applieddigitalskills.withgoogle.com/*"],
          "js": [
             "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/applieddigitalskills.js"
@@ -130,6 +133,7 @@
          "matches": ["https://edu.google.com/*"],
          "js": [
             "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "script/subtitle/edugoogle.js"
@@ -144,6 +148,7 @@
          "matches": ["https://www.coursera.org/*"],
          "js": [
             "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "./script/subtitle/courseraSubtitle.js"
@@ -159,6 +164,7 @@
          "matches": ["https://courses.edx.org/*"],
          "js": [
             "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "./script/lib/requestData.js",
@@ -171,6 +177,7 @@
          "matches": ["https://classroom.udacity.com/*"],
          "js": [
             "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
             "./script/lib/requestData.js",
@@ -198,5 +205,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "3.0.4"
+   "version": "3.0.5"
 }
