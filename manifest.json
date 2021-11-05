@@ -97,6 +97,24 @@
          "run_at": "document_end"
       },
       {
+         "all_frames": true,
+         "matches": ["https://awsacademy.contentcontroller.com/ScormEngineInterface/defaultui/player/cmi5-au/*"],
+         "js": [
+            "script/libary/jquery.js",
+            "script/lib/getData.js",
+            "./script/lib/requestData.js",
+            "script/libary/jquery-confirm.min.js",
+            "script/lib/notifycation.js",
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
+            "script/subtitle/awsacademySubtitle.js"
+         ],
+         "css": [
+            "style/jquery-confirm.min.css"
+         ],
+         "run_at": "document_end"
+      },
+      {
         "all_frames": true,
         "matches": ["https://player.vimeo.com/*"],
         "js": [
@@ -205,5 +223,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "3.0.5"
+   "version": "3.0.6"
 }
