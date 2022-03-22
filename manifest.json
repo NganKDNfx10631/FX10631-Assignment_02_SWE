@@ -37,6 +37,7 @@
             "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
+            "./script/subtitle/lib/subtitleAudio.js",
             "script/subtitle/udemy-subtitle.js"
          ],
          "css": [
@@ -52,6 +53,7 @@
             "script/libary/jquery-confirm.min.js",
             "./script/subtitle/lib/subtitleHandling.js",
             "./script/subtitle/lib/subtitleObserver.js",
+            "./script/subtitle/lib/subtitleAudio.js",
             "script/subtitle/udemy-subtitle.js"
          ],
          "css": [

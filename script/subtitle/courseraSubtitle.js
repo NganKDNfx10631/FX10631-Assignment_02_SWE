@@ -1,4 +1,4 @@
-let courseraSubtitleObserver, vi, eng, jp, oldURL, currentURL, audio_vi = '';
+let courseraSubtitleObserver, vi, eng, jp, oldURL, currentURL, audio_vi = audio_jp = '';
 var isShowPopup = false;
 
 function initComponent() {
@@ -14,17 +14,14 @@ function initComponent() {
                     if (!video || video.length == 0)
                         return false;
 
-                    isShowPopup = true;
                     Notifycation.confirmSubtitle().then(mode => {
+                        isShowPopup = true;
                         if (mode !== 0) {
                             createElement(mode);
                         }
                     });
                 }
-                // else if (subtitleMode === "0") {
-                //    createElement(1);
-                // } else if (subtitleMode === "2") {}
-            })
+            });
         }
     });
 }
@@ -69,6 +66,9 @@ function startObserver() {
         // start Ob server - video subtile
         courseraSubtitleObserver.startObserver(video);
 
+        if (audio_vi) // add tag audio
+            video.muted = true;
+
         // init subTileAudio
         subTileAudio.init(video);
     } else {
@@ -95,6 +95,7 @@ async function initData() {
 
     if (resAPI.code === 200) {
         audio_vi = resAPI.data.audio_vi ? resAPI.data.audio_vi : '';
+        audio_jp = resAPI.data.audio_jp ? resAPI.data.audio_jp : '';
 
         // check duplicate id
         if (resAPI.data.numb !== undefined) {
