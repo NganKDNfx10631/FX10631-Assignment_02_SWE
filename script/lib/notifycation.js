@@ -63,6 +63,7 @@ class Notifycation {
      * @returns {Promise<any>}
      */
     static confirmSubtitle(arraySubType = []) {
+        console.log(arraySubType);
         return new Promise(function (resolve, reject) {
             $.alert({
                 icon: '',
@@ -74,7 +75,7 @@ class Notifycation {
                 buttons: {
                     vi: {
                         text: 'Phụ đề',
-                        btnClass: arraySubType.includes('vi') ? 'btn-vn' : 'hidden',
+                        btnClass: arraySubType.length > 0 && arraySubType.includes('vi') ? 'btn-vn' : 'hidden',
                         action: function () {
                             resolve(typeSub.vi);
                         }
@@ -82,7 +83,7 @@ class Notifycation {
 
                     audio_vi: {
                         text: 'Thuyết minh',
-                        btnClass: arraySubType.includes('audio_vi') ? 'btn-audio-vn' : 'hidden',
+                        btnClass: arraySubType.length > 0 && arraySubType.includes('audio_vi') ? 'btn-audio-vn' : 'hidden',
                         action: function () {
                             resolve(typeSub.audio_vi);
                         }
@@ -90,7 +91,7 @@ class Notifycation {
 
                     eng: {
                         text: 'Subtitle',
-                        btnClass: arraySubType.includes('en') ? 'btn-en' : 'hidden',
+                        btnClass: arraySubType.length > 0 && arraySubType.includes('en') ? 'btn-en' : 'hidden',
                         action: function () {
                             resolve(typeSub.en);
                         }
@@ -98,7 +99,7 @@ class Notifycation {
 
                     audio_en: {
                         text: 'Audio En',
-                        btnClass: arraySubType.includes('audio_en') ? 'btn-audio-en' : 'hidden',
+                        btnClass: arraySubType.length > 0 && arraySubType.includes('audio_en') ? 'btn-audio-en' : 'hidden',
                         action: function () {
                             resolve(typeSub.audio_en);
                         }
@@ -106,15 +107,15 @@ class Notifycation {
 
                     jp: {
                         text: '字幕',
-                        btnClass: arraySubType.includes('jp') ? 'btn-jp' : 'hidden',
+                        btnClass: arraySubType.length > 0 && arraySubType.includes('jp') ? 'btn-jp' : 'hidden',
                         action: function () {
-                            resolve(typeSub.audio_vi);
+                            resolve(typeSub.jp);
                         }
                     },
 
                     audio_jp: {
                         text: 'スピーカー',
-                        btnClass: arraySubType.includes('audio_jp') ? 'btn-audio-jp' : 'hidden',
+                        btnClass: arraySubType.length > 0 && arraySubType.includes('audio_jp') ? 'btn-audio-jp' : 'hidden',
                         action: function () {
                             resolve(typeSub.audio_jp);
                         }

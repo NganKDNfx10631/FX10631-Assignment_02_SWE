@@ -38,25 +38,26 @@ async function initData() {
         resAPI = res;
     });
 
+    arraySubType = []; // reset type - show popup confirm
     if (resAPI.code === 200) {
         if (resAPI.data.audio_vi) {
             audio_vi = resAPI.data.audio_vi;
             arraySubType.push('audio_vi');
-        }else{
+        } else {
             audio_vi = '';
         }
 
         if (resAPI.data.audio_en) {
             audio_en = resAPI.data.audio_en;
             arraySubType.push('audio_en');
-        }else{
+        } else {
             audio_en = '';
         }
 
         if (resAPI.data.audio_jp) {
             audio_jp = resAPI.data.audio_jp;
             arraySubType.push('audio_jp');
-        }else{
+        } else {
             audio_jp = '';
         }
 
@@ -92,13 +93,13 @@ async function initData() {
             }
         });
 
-        if (eng.length)
-            arraySubType.push('en');
-
-        if (vi.length)
+        if (vi.length > 0)
             arraySubType.push('vi');
 
-        if (jp.length)
+        if (eng.length > 0)
+            arraySubType.push('en');
+
+        if (jp.length > 0)
             arraySubType.push('jp');
 
         udemySubtitleObserver.initData(vi, eng, jp);

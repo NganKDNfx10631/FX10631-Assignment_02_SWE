@@ -88,6 +88,7 @@ async function initData() {
         resAPI = res;
     });
 
+    arraySubType = []; // reset type - show popup confirm
     if (resAPI.code === 200) {
         if (resAPI.data.audio_vi) {
             audio_vi = resAPI.data.audio_vi;
@@ -196,13 +197,10 @@ async function initData() {
 
         }
 
-        if (eng && eng.length > 0)
-            arraySubType.push('en');
-
-        if (vi && vi.length > 0)
+        if (vi.length > 0)
             arraySubType.push('vi');
 
-        if (jp && jp.length > 0)
+        if (jp.length > 0)
             arraySubType.push('jp');
 
         return true;
