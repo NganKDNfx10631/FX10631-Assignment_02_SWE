@@ -73,7 +73,7 @@ class Notifycation {
                 useBootstrap: false,
                 buttons: {
                     vi: {
-                        text: 'Viet sub',
+                        text: 'Phụ đề',
                         btnClass: arraySubType.includes('vi') ? 'btn-vn' : 'hidden',
                         action: function () {
                             resolve(typeSub.vi);
@@ -81,7 +81,7 @@ class Notifycation {
                     },
 
                     audio_vi: {
-                        text: 'Viet sub + audio ',
+                        text: 'Thuyết minh',
                         btnClass: arraySubType.includes('audio_vi') ? 'btn-audio-vn' : 'hidden',
                         action: function () {
                             resolve(typeSub.audio_vi);
@@ -89,7 +89,7 @@ class Notifycation {
                     },
 
                     eng: {
-                        text: 'English',
+                        text: 'Subtitle',
                         btnClass: arraySubType.includes('en') ? 'btn-en' : 'hidden',
                         action: function () {
                             resolve(typeSub.en);
@@ -97,7 +97,7 @@ class Notifycation {
                     },
 
                     audio_en: {
-                        text: 'English sub + audio',
+                        text: 'Audio En',
                         btnClass: arraySubType.includes('audio_en') ? 'btn-audio-en' : 'hidden',
                         action: function () {
                             resolve(typeSub.audio_en);
@@ -105,7 +105,7 @@ class Notifycation {
                     },
 
                     jp: {
-                        text: 'Japanese sub',
+                        text: '字幕',
                         btnClass: arraySubType.includes('jp') ? 'btn-jp' : 'hidden',
                         action: function () {
                             resolve(typeSub.audio_vi);
@@ -113,7 +113,7 @@ class Notifycation {
                     },
 
                     audio_jp: {
-                        text: 'Japanese sub + audio',
+                        text: 'スピーカー',
                         btnClass: arraySubType.includes('audio_jp') ? 'btn-audio-jp' : 'hidden',
                         action: function () {
                             resolve(typeSub.audio_jp);
@@ -123,7 +123,7 @@ class Notifycation {
                     off: {
                         text: 'Keep original',
                         action: function () {
-                            resolve(0);
+                            resolve(typeSub.original);
                         }
                     }
                 }

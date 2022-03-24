@@ -44,19 +44,16 @@ class subtitleObserver {
             case typeSub.original:
                 return;
             case typeSub.vi: // sub vi
-            case typeSub.audio_vi: // sub vi + audio vn
                 if (this.dictVi !== undefined) {
                     translatedOb = this.dictVi.find(el => (el.start <= time && el.end >= time));
                 }
                 break;
             case typeSub.en: // sub en
-            case typeSub.audio_en: // sub en
                 if (this.dictEng !== undefined) {
                     translatedOb = this.dictEng.find(el => (el.start <= time && el.end >= time));
                 }
                 break;
             case typeSub.jp: // sub jp
-            case typeSub.audio_jp: // sub jp + audio jp
                 if (this.dictJp !== undefined) {
                     translatedOb = this.dictJp.find(el => (el.start <= time && el.end >= time));
                 }
