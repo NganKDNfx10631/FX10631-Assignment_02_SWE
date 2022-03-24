@@ -42,11 +42,22 @@ async function initData() {
         if (resAPI.data.audio_vi) {
             audio_vi = resAPI.data.audio_vi;
             arraySubType.push('audio_vi');
+        }else{
+            audio_vi = '';
+        }
+
+        if (resAPI.data.audio_en) {
+            audio_en = resAPI.data.audio_en;
+            arraySubType.push('audio_en');
+        }else{
+            audio_en = '';
         }
 
         if (resAPI.data.audio_jp) {
-            audio_vi = resAPI.data.audio_jp;
+            audio_jp = resAPI.data.audio_jp;
             arraySubType.push('audio_jp');
+        }else{
+            audio_jp = '';
         }
 
         // get Eng sub
