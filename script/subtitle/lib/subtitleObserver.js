@@ -1,3 +1,13 @@
+const typeSub = {
+    'vi': 1,
+    'audio_vi': 4,
+    'en': 2,
+    'audio_en': 6,
+    'jp': 3,
+    'audio_jp': 5,
+    'original': 0,
+};
+
 class subtitleObserver {
     /**
      * constructor
@@ -30,22 +40,29 @@ class subtitleObserver {
         let time = this.videoElement.currentTime * 1000;
         let translatedOb;
 
-        if (this.mode === 0) {
-            return;
-        } else if (this.mode === 1) {
-            if (this.dictVi !== undefined) {
-                translatedOb = this.dictVi.find(el => (el.start <= time && el.end >= time));
-            }
-        } else if (this.mode === 2) {
-            if (this.dictEng !== undefined) {
-                translatedOb = this.dictEng.find(el => (el.start <= time && el.end >= time));
-            }
-        } else if (this.mode === 3) {
-            if (this.dictJp !== undefined) {
-                translatedOb = this.dictJp.find(el => (el.start <= time && el.end >= time));
-            }
-        } else {
-            return;
+        switch (this.mode) {
+            case typeSub.original:
+                return;
+            case typeSub.vi: // sub vi
+            case typeSub.audio_vi: // sub vi + audio vn
+                if (this.dictVi !== undefined) {
+                    translatedOb = this.dictVi.find(el => (el.start <= time && el.end >= time));
+                }
+                break;
+            case typeSub.en: // sub en
+            case typeSub.audio_en: // sub en
+                if (this.dictEng !== undefined) {
+                    translatedOb = this.dictEng.find(el => (el.start <= time && el.end >= time));
+                }
+                break;
+            case typeSub.jp: // sub jp
+            case typeSub.audio_jp: // sub jp + audio jp
+                if (this.dictJp !== undefined) {
+                    translatedOb = this.dictJp.find(el => (el.start <= time && el.end >= time));
+                }
+                break;
+            default:
+                return;
         }
 
         if (translatedOb !== undefined) { // set text sub current time

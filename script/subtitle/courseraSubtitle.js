@@ -1,4 +1,4 @@
-let courseraSubtitleObserver, vi, eng, jp, oldURL, currentURL, audio_vi = audio_jp = '';
+let courseraSubtitleObserver, vi, eng, jp, oldURL, currentURL, audio_vi = audio_en = audio_jp = '', arraySubType = [];
 var isShowPopup = false;
 
 function initComponent() {
@@ -14,7 +14,7 @@ function initComponent() {
                     if (!video || video.length == 0)
                         return false;
 
-                    Notifycation.confirmSubtitle().then(mode => {
+                    Notifycation.confirmSubtitle(arraySubType).then(mode => {
                         isShowPopup = true;
                         if (mode !== 0) {
                             createElement(mode);
@@ -26,19 +26,6 @@ function initComponent() {
     });
 }
 
-function checkURLchange(currentURL) {
-    if (currentURL != oldURL) {
-        oldURL = currentURL;
-        initComponent();
-    } else {
-        oldURL = window.location.pathname;
-    }
-
-    setTimeout(function () {
-        checkURLchange(window.location.pathname);
-    }, 1000);
-}
-
 function createElement(mode) {
     let container = $('<div style ="position: absolute;bottom: 4em;left: 0;right: 0;z-index: 1;display: flex;justify-content: center;-webkit-transition: bottom .2s;-moz-transition: bottom .2s;-ms-transition: bottom .2s;-o-transition: bottom .2s; transition: bottom .2s;cursor: inherit; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;-o-user-select: none;user-select: none;"> <div style = "position: relative;display: inline;height: auto;max-width: 30em;color: #fff;background-color: #14171c;font-family: sans-serif;line-height: 1.4;text-align: center;margin: 0 .5em 1em; padding: 2px 8px;white-space: pre-line;writing-mode: horizontal-tb;unicode-bidi: plaintext;direction: ltr;-webkit-box-decoration-break: clone;font-size: 2.5vh; opacity: 0.75;" id="funix-text"></div> </div>');
 
@@ -46,8 +33,15 @@ function createElement(mode) {
     courseraSubtitleObserver.initData(vi, eng, jp);
     courseraSubtitleObserver.mode = mode;
 
-    if (audio_vi) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_vi, '.rc-VideoControlsContainer');
+    subTileAudio.removeTagEventAudio(); // on change url video => reset tag + event audio
+    if (audio_vi && mode == typeSub.audio_vi) // add tag audio
+        subTileAudio.buildTagHtmlAudio(audio_vi, mode, '.rc-VideoControlsContainer');
+
+    if (audio_en && mode == typeSub.audio_en) // add tag audio
+        subTileAudio.buildTagHtmlAudio(audio_en, mode, '.rc-VideoControlsContainer');
+
+    if (audio_jp && mode == typeSub.audio_jp) // add tag audio
+        subTileAudio.buildTagHtmlAudio(audio_jp, mode, '.rc-VideoControlsContainer');
 
     startObserver();
     $(".rc-VideoControlsContainer").append(container);
@@ -63,14 +57,15 @@ function createElement(mode) {
 function startObserver() {
     let video = $("video").get(0);
     if (video !== undefined) {
+        video.muted = false; // turn on mute
         // start Ob server - video subtile
         courseraSubtitleObserver.startObserver(video);
 
-        if (audio_vi) // add tag audio
-            video.muted = true;
-
-        // init subTileAudio
-        subTileAudio.init(video);
+        if (audio_vi || audio_jp || audio_en) {
+            video.muted = true; // off mute video current
+            // init subTileAudio
+            subTileAudio.init(video); // load audio
+        } // add tag audio
     } else {
         setTimeout(function () {
             startObserver();
@@ -94,8 +89,20 @@ async function initData() {
     });
 
     if (resAPI.code === 200) {
-        audio_vi = resAPI.data.audio_vi ? resAPI.data.audio_vi : '';
-        audio_jp = resAPI.data.audio_jp ? resAPI.data.audio_jp : '';
+        if (resAPI.data.audio_vi) {
+            audio_vi = resAPI.data.audio_vi;
+            arraySubType.push('audio_vi');
+        }
+
+        if (resAPI.data.audio_en) {
+            audio_vi = resAPI.data.audio_en;
+            arraySubType.push('audio_en');
+        }
+
+        if (resAPI.data.audio_jp) {
+            audio_vi = resAPI.data.audio_jp;
+            arraySubType.push('audio_jp');
+        }
 
         // check duplicate id
         if (resAPI.data.numb !== undefined) {
@@ -182,23 +189,48 @@ async function initData() {
             });
 
         }
+
+        if (eng && eng.length > 0)
+            arraySubType.push('en');
+
+        if (vi && vi.length > 0)
+            arraySubType.push('vi');
+
+        if (jp && jp.length > 0)
+            arraySubType.push('jp');
+
         return true;
     }
     return false;
 }
 
-
 $(document).ready(function () {
     oldURL = window.location.pathname;
     currentURL = window.location.pathname;
     var timeCountDown = setInterval(function () {
-        initComponent();
         if (isShowPopup) {
             clearInterval(timeCountDown);
             checkURLchange(oldURL);
+            return;
         }
+        initComponent();
     }, 3000);
 });
+
+/**
+ * check URL change
+ * @param currentURL
+ */
+function checkURLchange(currentURL) {
+    if (currentURL !== oldURL) {
+        oldURL = currentURL;
+        initComponent();
+    }
+
+    setTimeout(function () {
+        checkURLchange(window.location.pathname);
+    }, 1000);
+}
 
 function checkPopup() {
     let popup = $(".jconfirm-modern"); // check tag video

@@ -5,7 +5,7 @@ let videoObserver, udemySubtitleObserver,
 let vi,
     eng,
     jp,
-    base, audio_vi, audio_jp, audio_en, audio = [], arraySubTitle = [];
+    base, audio_vi, audio_jp, audio_en, audio = [], arraySubType = [];
 const caption = '[class^="captions-display--captions-container"]', direct_sub_node = '#funixSubtitle';
 
 async function initData() {
@@ -41,12 +41,12 @@ async function initData() {
     if (resAPI.code === 200) {
         if (resAPI.data.audio_vi) {
             audio_vi = resAPI.data.audio_vi;
-            arraySubTitle.push('audio_vi');
+            arraySubType.push('audio_vi');
         }
 
         if (resAPI.data.audio_jp) {
             audio_vi = resAPI.data.audio_jp;
-            arraySubTitle.push('audio_jp');
+            arraySubType.push('audio_jp');
         }
 
         // get Eng sub
@@ -82,13 +82,13 @@ async function initData() {
         });
 
         if (eng.length)
-            arraySubTitle.push('en');
+            arraySubType.push('en');
 
         if (vi.length)
-            arraySubTitle.push('vi');
+            arraySubType.push('vi');
 
         if (jp.length)
-            arraySubTitle.push('jp');
+            arraySubType.push('jp');
 
         udemySubtitleObserver.initData(vi, eng, jp);
     }
@@ -130,7 +130,7 @@ function pageLoad(code) {
         getSettingData().then(res => {
             let subtitleMode = res.modeSubtitle;
             if (subtitleMode === "0") {
-                Notifycation.confirmSubtitle(arraySubTitle).then(mode => {
+                Notifycation.confirmSubtitle(arraySubType).then(mode => {
                     if (mode !== 0) {
                         start(mode, res.float);
                     }
@@ -142,10 +142,9 @@ function pageLoad(code) {
 
 function start(type, float) {
     udemySubtitleObserver.mode = type;
-    // Add Subtitle Button
-    //button.insertAfter("div[data-purpose=\"captions-menu-button\"]");----remove
+
     $("#captions-menu").hide();
-    initSubnode();
+    initSubnode(type);
 
     // turnSubtitleOn();
     if (float) initMenuComponents();
@@ -159,11 +158,13 @@ function startObserver() {
         }, 500);
     } else {
         udemySubtitleObserver.startObserver(video);
-        // init subTile Audio
-        if (audio_vi) // add tag audio
-            video.muted = true;
+        video.muted = false; // turn on mute
 
-        subTileAudio.init(video);
+        if (audio_vi || audio_jp || audio_en) {
+            video.muted = true; // off mute video current
+            // init subTileAudio
+            subTileAudio.init(video); // load audio
+        } // add tag audio
 
         videoObserver.observe(video, {
             attributes: true
@@ -171,13 +172,20 @@ function startObserver() {
     }
 }
 
-function initSubnode() {
+function initSubnode(mode) {
     const subtitleObject = $('<div class="captions-display--captions-container--1-aQJ"> <div class="captions-display--captions-cue-text--ECkJu" data-purpose="captions-cue-text" style="font-size: 26.36px; opacity: 0.75;justify-content: center;text-align: center;" id="funixSubtitle"></div> </div>');
     $(caption).hide();
     $('[class^="video-player--video-wrapper"]').append(subtitleObject);
 
-    if (audio_vi) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_vi);
+    subTileAudio.removeTagEventAudio(); // on change url video => reset tag + event audio
+    if (audio_vi && mode == typeSub.audio_vi) // add tag audio
+        subTileAudio.buildTagHtmlAudio(audio_vi, mode);
+
+    if (audio_en && mode == typeSub.audio_en) // add tag audio
+        subTileAudio.buildTagHtmlAudio(audio_en, mode);
+
+    if (audio_jp && mode == typeSub.audio_jp) // add tag audio
+        subTileAudio.buildTagHtmlAudio(audio_jp, mode);
 }
 
 function initButton() {

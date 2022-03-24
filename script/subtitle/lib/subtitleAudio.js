@@ -75,23 +75,32 @@ var subTileAudio = {
     /**
      * build Tag Html Audio
      * @param linkAudio
+     * @param type
      * @param idAppend
      * @returns {boolean}
      */
-    buildTagHtmlAudio: function (linkAudio, idAppend = 'body') {
-        console.log(linkAudio);
-        console.log(idAppend);
+    buildTagHtmlAudio: function (linkAudio, type = 0, idAppend = 'body') {
         var self = this;
         if (!linkAudio || !idAppend)
             return false;
 
         var idTagAudio = $('#' + self.idTagAudio);
-        if (idTagAudio.length > 0)
-            return false;
+        if (idTagAudio.length > 0) { // check tag audio
+            idTagAudio.remove(); // remove tag audio old
+        }
 
         var tagAudio = '<audio id="' + self.idTagAudio + '" src="' + linkAudio + '" controls="controls" style="width: 100%;display: none"></audio>';
         $(idAppend).append(tagAudio);
         self.audio = document.getElementById(self.idTagAudio);
         console.log('buildTagHtmlAudio');
+    },
+
+    /**
+     * remove Tag - reset Event Audio , video
+     */
+    removeTagEventAudio: function () {
+        var self = this;
+        $('#' + self.idTagAudio).remove();
+        self.audio = self.video = null;
     }
 };

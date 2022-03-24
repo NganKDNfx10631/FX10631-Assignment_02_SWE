@@ -62,8 +62,7 @@ class Notifycation {
      * @param arraySubTitle
      * @returns {Promise<any>}
      */
-    static confirmSubtitle(arraySubTitle = []) {
-        console.log(arraySubTitle);
+    static confirmSubtitle(arraySubType = []) {
         return new Promise(function (resolve, reject) {
             $.alert({
                 icon: '',
@@ -75,35 +74,49 @@ class Notifycation {
                 buttons: {
                     vi: {
                         text: 'Viet sub',
+                        btnClass: arraySubType.includes('vi') ? 'btn-vn' : 'hidden',
                         action: function () {
-                            resolve(1);
+                            resolve(typeSub.vi);
                         }
                     },
 
                     audio_vi: {
                         text: 'Viet sub + audio ',
+                        btnClass: arraySubType.includes('audio_vi') ? 'btn-audio-vn' : 'hidden',
                         action: function () {
-                            resolve(4);
+                            resolve(typeSub.audio_vi);
                         }
                     },
-                    // eng: {
-                    //    text: 'English',
-                    //    action: function() {
-                    //       resolve(2);
-                    //    }
-                    // },
+
+                    eng: {
+                        text: 'English',
+                        btnClass: arraySubType.includes('en') ? 'btn-en' : 'hidden',
+                        action: function () {
+                            resolve(typeSub.en);
+                        }
+                    },
+
+                    audio_en: {
+                        text: 'English sub + audio',
+                        btnClass: arraySubType.includes('audio_en') ? 'btn-audio-en' : 'hidden',
+                        action: function () {
+                            resolve(typeSub.audio_en);
+                        }
+                    },
 
                     jp: {
                         text: 'Japanese sub',
+                        btnClass: arraySubType.includes('jp') ? 'btn-jp' : 'hidden',
                         action: function () {
-                            resolve(3);
+                            resolve(typeSub.audio_vi);
                         }
                     },
 
                     audio_jp: {
                         text: 'Japanese sub + audio',
+                        btnClass: arraySubType.includes('audio_jp') ? 'btn-audio-jp' : 'hidden',
                         action: function () {
-                            resolve(5);
+                            resolve(typeSub.audio_jp);
                         }
                     },
 
@@ -115,6 +128,11 @@ class Notifycation {
                     }
                 }
             });
+            const style = document.createElement('style');
+            style.innerHTML = `.hidden {
+                                display: none !important;
+                              }`;
+            document.head.appendChild(style);
         });
     }
 
