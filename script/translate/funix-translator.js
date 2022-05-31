@@ -153,6 +153,15 @@ class OnpageTranslator {
         }
 
         chrome.runtime.sendMessage(request, res => {
+            // For freecodecamp page, get width and height of .reflex-size-aware:first and resize.
+            // Check it is freeocde camp page
+            let width, height;
+            if(window.location.href.match("freecodecamp.org/*"))
+            {
+                width = $(".reflex-size-aware > div:first").width();
+                height = $(".reflex-size-aware > div:first").height();
+            }
+
             let html_ = res.replace(/color: red;/gi, "");
             // For cousera
             if (window.location.href.match("courses.edx.org/*")) {
@@ -174,6 +183,14 @@ class OnpageTranslator {
                 $(selector).each(function (index, el) {
                     $(el).replaceWith(oldElement[index]);
                 });
+            }
+
+            // Resize for freecodecamp
+            if(window.location.href.match("freecodecamp.org/*"))
+            {
+                // Resize by css
+                $(".reflex-size-aware > div").css("width", width);
+                $(".reflex-size-aware > div").css("height", height);
             }
 
         });
