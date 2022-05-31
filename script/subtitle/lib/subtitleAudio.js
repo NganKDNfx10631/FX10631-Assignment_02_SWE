@@ -40,6 +40,11 @@ var subTileAudio = {
             subTileAudio.setCurrentTimeAudio(video);
         };
 
+        video.onmute = function () {
+            console.log('onmute');
+            subTileAudio.setCurrentTimeAudio(video);
+        };
+
         // on change speed
         video.onratechange = function () {
             console.log('onratechange');
@@ -59,7 +64,7 @@ var subTileAudio = {
         self.audio.currentTime = video.currentTime; // set time current
         self.audio.playbackRate = video.playbackRate; // set speed audio
 
-        if (video.muted) {
+        if (video.muted || self.getCookie('mute')) { //  check mute = true => mute audio off , false => mute audio on
             self.audio.muted = false;
         } else {
             self.audio.muted = true;
@@ -72,6 +77,34 @@ var subTileAudio = {
         }
     },
 
+    // function that stores the name of the visitor in a cookie variable
+    setCookie: function (cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    },
+
+    /*
+    * function that returns the value of a specified cookie
+    */
+    getCookie: function (cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return false;
+    },
+
     /**
      * build Tag Html Audio
      * @param linkAudio
@@ -79,7 +112,7 @@ var subTileAudio = {
      * @param idAppend
      * @returns {boolean}
      */
-    buildTagHtmlAudio: function (linkAudio, type = 0, idAppend = 'body') {
+    buildTagHtmlAudio: function (linkAudio, idAppend = 'body') {
         var self = this;
         if (!linkAudio || !idAppend)
             return false;
@@ -90,7 +123,10 @@ var subTileAudio = {
         }
 
         var tagAudio = '<audio id="' + self.idTagAudio + '" src="' + linkAudio + '" controls="controls" style="width: 100%;display: none"></audio>';
+        console.log(idAppend);
+        console.log(tagAudio);
         $(idAppend).append(tagAudio);
+
         self.audio = document.getElementById(self.idTagAudio);
         console.log('buildTagHtmlAudio');
     },
@@ -101,6 +137,15 @@ var subTileAudio = {
     removeTagEventAudio: function () {
         var self = this;
         $('#' + self.idTagAudio).remove();
+        self.audio = self.video = null;
+    },
+
+    removeTagAudio: function () {
+        var self = this;
+        $('#' + self.idTagAudio).remove();
+    },
+
+    resetAudioAndVideo: function () {
         self.audio = self.video = null;
     }
 };

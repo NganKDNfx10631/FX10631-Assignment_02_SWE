@@ -31,23 +31,7 @@
          "run_at": "document_end"
       },
       {
-         "matches": ["https://www.udemy.com/*"],
-         "js": [
-            "script/libary/jquery.js",
-            "script/libary/jquery-confirm.min.js",
-            "./script/subtitle/lib/subtitleHandling.js",
-            "./script/subtitle/lib/subtitleObserver.js",
-            "./script/subtitle/lib/subtitleAudio.js",
-            "script/subtitle/udemy-subtitle.js"
-         ],
-         "css": [
-            "style/style.css",
-            "style/jquery-confirm.min.css"
-         ],
-         "run_at": "document_end"
-      },
-      {
-         "matches": ["https://fpt-software.udemy.com/*"],
+         "matches": ["https://*.udemy.com/*"],
          "js": [
             "script/libary/jquery.js",
             "script/libary/jquery-confirm.min.js",
@@ -226,5 +210,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "3.0.9"
+   "version": "3.1.3"
 }

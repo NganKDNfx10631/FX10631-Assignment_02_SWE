@@ -9,6 +9,8 @@ let vi,
 const caption = '[class^="captions-display--captions-container"]', direct_sub_node = '#funixSubtitle';
 
 async function initData() {
+    console.log(9 + '-udemy-subtitle');
+
     vi = [];
     eng = [];
     jp = [];
@@ -38,7 +40,8 @@ async function initData() {
         resAPI = res;
     });
 
-    arraySubType = []; // reset type - show popup confirm
+    arraySubType = []; // reset
+
     if (resAPI.code === 200) {
         if (resAPI.data.audio_vi) {
             audio_vi = resAPI.data.audio_vi;
@@ -93,13 +96,13 @@ async function initData() {
             }
         });
 
-        if (vi.length > 0)
-            arraySubType.push('vi');
-
-        if (eng.length > 0)
+        if (eng.length)
             arraySubType.push('en');
 
-        if (jp.length > 0)
+        if (vi.length)
+            arraySubType.push('vi');
+
+        if (jp.length)
             arraySubType.push('jp');
 
         udemySubtitleObserver.initData(vi, eng, jp);
@@ -108,6 +111,8 @@ async function initData() {
 }
 
 $(document).ready(function () {
+    console.log(1 + '-udemy-subtitle');
+
     enable = false;
     udemySubtitleObserver = new subtitleObserver(direct_sub_node); //Observe the paragraph
     initComponents(); // Check if user change lesson.
@@ -120,6 +125,7 @@ $(document).ready(function () {
 });
 
 function initComponents() {
+    console.log(2 + '-udemy-subtitle');
     // Setup Subtitle button
     //initButton();----remove
 
@@ -137,11 +143,13 @@ function initComponents() {
 }
 
 function pageLoad(code) {
+    console.log(3 + '-udemy-subtitle');
     startObserver();
     if (code === 200) {
         getSettingData().then(res => {
             let subtitleMode = res.modeSubtitle;
             if (subtitleMode === "0") {
+                subTileAudio.removeTagAudio();
                 Notifycation.confirmSubtitle(arraySubType).then(mode => {
                     if (mode !== 0) {
                         start(mode, res.float);
@@ -153,6 +161,8 @@ function pageLoad(code) {
 }
 
 function start(type, float) {
+    console.log(4 + '-udemy-subtitle');
+
     udemySubtitleObserver.mode = type;
 
     $("#captions-menu").hide();
@@ -163,6 +173,8 @@ function start(type, float) {
 }
 
 function startObserver() {
+    console.log(5 + '-udemy-subtitle');
+
     let video = $("video").get(0);
     if (video === undefined) {
         setTimeout(() => {
@@ -185,22 +197,26 @@ function startObserver() {
 }
 
 function initSubnode(mode) {
+    console.log(6 + '-udemy-subtitle');
+
     const subtitleObject = $('<div class="captions-display--captions-container--1-aQJ"> <div class="captions-display--captions-cue-text--ECkJu" data-purpose="captions-cue-text" style="font-size: 26.36px; opacity: 0.75;justify-content: center;text-align: center;" id="funixSubtitle"></div> </div>');
     $(caption).hide();
     $('[class^="video-player--video-wrapper"]').append(subtitleObject);
 
     subTileAudio.removeTagEventAudio(); // on change url video => reset tag + event audio
     if (audio_vi && mode == typeSub.audio_vi) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_vi, mode);
+        subTileAudio.buildTagHtmlAudio(audio_vi);
 
     if (audio_en && mode == typeSub.audio_en) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_en, mode);
+        subTileAudio.buildTagHtmlAudio(audio_en);
 
     if (audio_jp && mode == typeSub.audio_jp) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_jp, mode);
+        subTileAudio.buildTagHtmlAudio(audio_jp);
 }
 
 function initButton() {
+    console.log(7 + '-udemy-subtitle');
+
     // Init elements
     button = $("<div data-purpose=\"captions-menu-button\" class=\"menu--dropdown--3Vksr dropup btn-group\"></div>");
     iconBtn = $("<button aria-label=\"FUNiX\" data-purpose=\"theatre-mode-toggle-button\" aria-labelledby=\"popper10\" aria-describedby=\"popper10\" tabindex=\"0\" type=\"button\" class=\"control-bar-button--button--20ibv btn btn-text\"> <span class=\"control-bar-button--icon--28inh udi\"> <img src=\"https://firebasestorage.googleapis.com/v0/b/funix-subtitle.appspot.com/o/funix-icon.png?alt=media&token=d87f1917-86c3-4359-b771-6c8768627e1c\"></span></button>");
@@ -250,6 +266,8 @@ function initButton() {
 }
 
 function setActiveButton(buttonActive) {
+    console.log(8 + '-udemy-subtitle');
+
     viBtn.removeClass("active");
     engBtn.removeClass("active");
     offBtn.removeClass("active");

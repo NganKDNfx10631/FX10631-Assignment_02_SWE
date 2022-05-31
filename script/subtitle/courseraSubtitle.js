@@ -35,15 +35,15 @@ function createElement(mode) {
 
     subTileAudio.removeTagEventAudio(); // on change url video => reset tag + event audio
     if (audio_vi && mode == typeSub.audio_vi) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_vi, mode, '.rc-VideoControlsContainer');
+        subTileAudio.buildTagHtmlAudio(audio_vi, '.rc-VideoControlsContainer');
 
     if (audio_en && mode == typeSub.audio_en) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_en, mode, '.rc-VideoControlsContainer');
+        subTileAudio.buildTagHtmlAudio(audio_en, '.rc-VideoControlsContainer');
 
     if (audio_jp && mode == typeSub.audio_jp) // add tag audio
-        subTileAudio.buildTagHtmlAudio(audio_jp, mode, '.rc-VideoControlsContainer');
+        subTileAudio.buildTagHtmlAudio(audio_jp, '.rc-VideoControlsContainer');
 
-    startObserver();
+    startObserver(mode);
     $(".rc-VideoControlsContainer").append(container);
 
     let funixSubtitle = document.getElementById("funix-text");
@@ -54,21 +54,22 @@ function createElement(mode) {
     }
 }
 
-function startObserver() {
+function startObserver(mode = 0) {
     let video = $("video").get(0);
     if (video !== undefined) {
-        video.muted = false; // turn on mute
         // start Ob server - video subtile
         courseraSubtitleObserver.startObserver(video);
 
-        if (audio_vi || audio_jp || audio_en) {
+        if (mode == typeSub.audio_vi || mode == typeSub.audio_jp || mode == typeSub.audio_en) {
             video.muted = true; // off mute video current
             // init subTileAudio
             subTileAudio.init(video); // load audio
-        } // add tag audio
+        } else {
+            video.muted = false; // turn on mute
+        }
     } else {
         setTimeout(function () {
-            startObserver();
+            startObserver(mode);
         }, 1000);
     }
 }
@@ -83,6 +84,7 @@ async function initData() {
             lid: id
         }
     };
+
     let resAPI = {};
     await sendMessagePromise(request).then(res => {
         resAPI = res;
@@ -93,21 +95,21 @@ async function initData() {
         if (resAPI.data.audio_vi) {
             audio_vi = resAPI.data.audio_vi;
             arraySubType.push('audio_vi');
-        }else{
+        } else {
             audio_vi = '';
         }
 
         if (resAPI.data.audio_en) {
             audio_en = resAPI.data.audio_en;
             arraySubType.push('audio_en');
-        }else{
+        } else {
             audio_en = '';
         }
 
         if (resAPI.data.audio_jp) {
             audio_jp = resAPI.data.audio_jp;
             arraySubType.push('audio_jp');
-        }else{
+        } else {
             audio_jp = '';
         }
 
