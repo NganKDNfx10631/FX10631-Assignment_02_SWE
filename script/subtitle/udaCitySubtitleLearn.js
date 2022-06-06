@@ -14,7 +14,7 @@ var udaCitySubtitleLearn = {
     audio_jp: '',
     arraySubType: null,
     isShowPopup: false,
-    containerClass: ".AtomList_atom-list__sWtb_",
+    containerClass: ".vds-loading",
     boxSubtitleTextClass: "subtitle-funix",
     removeTagTrackTextSubOriginal: ".vjs-text-track-display",
     isStartCheckChangeUrl: false,
