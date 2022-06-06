@@ -190,6 +190,20 @@
             "./script/subtitle/udacitySubtitle.js"
          ],
          "run_at": "document_end"
+      },
+      {
+         "matches": ["https://learn.udacity.com/*"],
+         "js": [
+            "script/libary/jquery.js",
+            "script/libary/jquery-confirm.min.js",
+            "./script/subtitle/lib/subtitleHandling.js",
+            "./script/subtitle/lib/subtitleObserver.js",
+            "./script/subtitle/lib/subtitleAudio.js",
+            "./script/lib/requestData.js",
+            "./script/subtitle/subtitleBase.js",
+            "./script/subtitle/udaCitySubtitleLearn.js"
+         ],
+         "run_at": "document_end"
       }
    ],
    "background": {
