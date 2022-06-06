@@ -23,7 +23,7 @@ var udaCitySubtitleLearn = {
     },
 
     /**
-     *
+     * auto load
      */
     autoload: function () {
         var self = this;
@@ -42,7 +42,7 @@ var udaCitySubtitleLearn = {
     },
 
     /**
-     *
+     * init Component
      * @returns {boolean}
      */
     initComponent: function () {
@@ -94,7 +94,6 @@ var udaCitySubtitleLearn = {
         await sendMessagePromise(request).then(res => {
             resAPI = res;
         });
-        console.log(resAPI);
 
         self.arraySubType = []; // reset type - show popup confirm
         if (resAPI.code === 200) {
@@ -119,26 +118,24 @@ var udaCitySubtitleLearn = {
                 self.audio_jp = '';
             }
 
-            await
-                sendMessagePromise({
-                    content: "GET Request",
-                    requestUrl: resAPI.data.vi,
-                }).then(data => {
-                    // alert("data : " + JSON.stringify(data));
-                    if (data !== undefined) {
-                        self.vi = SubtitleHandling.parseSubByRegex(data);
-                    }
-                });
+            await sendMessagePromise({
+                content: "GET Request",
+                requestUrl: resAPI.data.vi,
+            }).then(data => {
+                // alert("data : " + JSON.stringify(data));
+                if (data !== undefined) {
+                    self.vi = SubtitleHandling.parseSubByRegex(data);
+                }
+            });
 
-            await
-                sendMessagePromise({
-                    content: "GET Request",
-                    requestUrl: resAPI.data.jp,
-                }).then(data => {
-                    if (data !== undefined) {
-                        self.jp = SubtitleHandling.parseSubByRegex(data);
-                    }
-                });
+            await sendMessagePromise({
+                content: "GET Request",
+                requestUrl: resAPI.data.jp,
+            }).then(data => {
+                if (data !== undefined) {
+                    self.jp = SubtitleHandling.parseSubByRegex(data);
+                }
+            });
 
             if (self.vi.length > 0)
                 arraySubType.push('vi');
@@ -223,11 +220,6 @@ var udaCitySubtitleLearn = {
      */
     checkURLChange: function () {
         var self = this;
-
-        console.log('checkURLChange');
-        console.log(window.location.pathname);
-        console.log(self.oldURL);
-
         if (window.location.pathname !== self.oldURL) {
             self.oldURL = window.location.pathname;
             self.initComponent();

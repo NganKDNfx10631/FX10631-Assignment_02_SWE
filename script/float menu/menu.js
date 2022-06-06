@@ -14,6 +14,8 @@ function expand() {
 }
 
 function initMenuComponents() {
+    return false; // off popup
+
     if ($("#floatFunixMenu").length === 0) {
         // Add Icon
         let head = document.head || document.getElementsByTagName('head')[0],
