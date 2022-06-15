@@ -5,7 +5,7 @@ $(document).ready(function () {
 var udaCitySubtitleLearn = {
     courseraSubtitleObserver: null,
     vi: '',
-    eng: '',
+    en: '',
     jp: '',
     oldURL: '',
     currentURL: '',
@@ -14,7 +14,7 @@ var udaCitySubtitleLearn = {
     audio_jp: '',
     arraySubType: null,
     isShowPopup: false,
-    containerClass: ".vds-loading",
+    containerClass: ".video-js",
     boxSubtitleTextClass: "subtitle-funix",
     removeTagTrackTextSubOriginal: ".vjs-text-track-display",
     isStartCheckChangeUrl: false,
@@ -52,6 +52,7 @@ var udaCitySubtitleLearn = {
 
         self.initData().then((status) => {
             if (status) {
+                console.log(self.arraySubType);
                 getSettingData().then(res => {
                     let subtitleMode = res.modeSubtitle;
                     if (subtitleMode === "0") {
@@ -59,9 +60,9 @@ var udaCitySubtitleLearn = {
                         if (!video || video.length == 0)
                             return false;
 
-                        Notifycation.confirmSubtitle(arraySubType).then(mode => {
+                        Notifycation.confirmSubtitle(self.arraySubType).then(mode => {
+                            self.isShowPopup = true;
                             if (mode !== 0) {
-                                self.isShowPopup = true;
                                 self.createElement(mode);
                             }
                         });
@@ -137,11 +138,24 @@ var udaCitySubtitleLearn = {
                 }
             });
 
+            await sendMessagePromise({
+                content: "GET Request",
+                requestUrl: resAPI.data.en,
+            }).then(data => {
+                // alert("data : " + JSON.stringify(data));
+                if (data !== undefined) {
+                    self.en = SubtitleHandling.parseSubByRegex(data);
+                }
+            });
+
             if (self.vi.length > 0)
-                arraySubType.push('vi');
+                self.arraySubType.push('vi');
+
+            if (self.en.length > 0)
+                self.arraySubType.push('en');
 
             if (self.jp.length > 0)
-                arraySubType.push('jp');
+                self.arraySubType.push('jp');
 
             return true;
         }

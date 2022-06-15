@@ -1,3 +1,4 @@
+let arraySubType = null;
 class EdxSubtitle {
     constructor() {
         this.cid = "edx";
@@ -12,7 +13,7 @@ class EdxSubtitle {
     }
 
     async initData() {
-
+        arraySubType = []; // reset type - show popup confirm
         // Number video
         this.numbVi = $("video").length;
 
@@ -21,9 +22,22 @@ class EdxSubtitle {
             .then(res => {
                 this.data = res
             });
-        if (!this.data) return;
+
+        if (!this.data)
+            return;
 
         this.data[1] = this.data;
+        if (this.data[1].vi && this.data[1].vi.length > 0) {
+            arraySubType.push('vi');
+        }
+
+        if (this.data[1].en && this.data[1].en.length > 0) {
+            arraySubType.push('en');
+        }
+
+        if (this.data[1].jp && this.data[1].jp.length > 0) {
+            arraySubType.push('jp');
+        }
 
         let i = 2;
         for (i = 2; i <= this.numbVi; i++) {
@@ -37,7 +51,7 @@ class EdxSubtitle {
         getSettingData().then(res => {
             let subtitleMode = res.modeSubtitle;
             if (subtitleMode === "0") {
-                Notifycation.confirmSubtitle().then(mode => {
+                Notifycation.confirmSubtitle(arraySubType).then(mode => {
                     if (mode !== 0) {
                         this.startSubtitle(mode);
                     }
