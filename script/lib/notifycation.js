@@ -147,7 +147,7 @@ class Notifycation {
                 icon: '',
                 theme: 'modern',
                 title: 'FUNiX Passport',
-                content: "This page already has translate support, would you like to enable it?",
+                content: "<div id='funix-onpage-modal'>This page already has translate support, would you like to enable it?</div>",
                 boxWidth: '500px',
                 useBootstrap: false,
                 buttons: {

@@ -211,7 +211,8 @@
          "script/libary/jquery.js",
          "script/background/ajax.js",
          "script/background/refresh-domain.js",
-         "script/background/update.js"
+         "script/background/update.js",
+         "script/background/urlChangeProvider.js"
       ]
    },
    "description": "This utility helps FUNiX students for learning online, ex: Vietnamese translation for course materials, highlight video's subtitles.",
@@ -224,5 +225,5 @@
    "name": "FUNiX Passport",
    "permissions": ["http://*/*", "https://*/*", "storage", "notifications"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "3.1.6"
+   "version": "3.1.7"
 }
