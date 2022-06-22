@@ -1,11 +1,10 @@
 class OnpageTranslator {
     constructor() {
         this.addEventReload = false; // Check if add click event to reload
+        this.curentRenderPage = '';
     }
 
     checkDomain() {
-        console.log(1 + '-OnpageTranslator');
-
         let hostname = window.location.hostname;
         let self = this;
         getDomainList().then(res => {
@@ -39,8 +38,6 @@ class OnpageTranslator {
     }
 
     init() {
-        console.log(3 + '-OnpageTranslator');
-
         let request = {
             content: "POST Request",
             requestUrl: "https://translation.funix.edu.vn/get-data",
@@ -102,6 +99,18 @@ class OnpageTranslator {
                 }
             });
         });
+
+        // Handle event from backgroud
+        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+            if (request.type == 'tab-url-updated') {
+                // if tab is sololearn
+                if (request.url.includes('sololearn.com')) {
+                    if (request.url.split("/").length >= 8) {
+                        self.init();
+                    }
+                }
+            }
+        });
     }
 
     gotData(dataVN, dataJP, isVN, isJP) {
@@ -112,13 +121,23 @@ class OnpageTranslator {
         getSettingData().then(res => {
             let subtitleMode = res.modeSubtitle;
             if (subtitleMode === "0") {
-                Notifycation.confirmPageTranslate().then(result => {
-                    if (result === 1) {
-                        self.waitContentLoad(dataVN, res.float);
-                    } else if (result === 2) {
-                        self.waitContentLoad(dataJP, res.float);
+                // Check of #funix-onpage-modal exist
+                if (!document.getElementById("funix-onpage-modal")) {
+                    // if it sololearn so check the current page
+                    if (window.location.href.includes('sololearn.com')) {
+                        if (this.curentRenderPage === window.location.href) {
+                            return;
+                        }
                     }
-                });
+                    this.curentRenderPage = window.location.href;
+                    Notifycation.confirmPageTranslate().then(result => {
+                        if (result === 1) {
+                            self.waitContentLoad(dataVN, res.float);
+                        } else if (result === 2) {
+                            self.waitContentLoad(dataJP, res.float);
+                        }
+                    });
+                }
             }
             // else if(subtitleMode === "0")
             // {
