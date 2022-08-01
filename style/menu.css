@@ -1,129 +1,129 @@
-#floatFunixMenu{
-   position:absolute;
-   width:120px;
-   height:120px;
-   top: 100px;
-   right: 50px;
-   z-index:100
+#floatFunixMenu {
+	position: absolute;
+	width: 120px;
+	height: 120px;
+	top: 100px;
+	right: 50px;
+	z-index: 100
 }
 
 #floatFunixMenu #toggle {
-   background: -webkit-linear-gradient(top left, rgba(247, 202, 201, 1) 0%, rgba(146, 168, 209, 1) 100%);
-   background: -o-linear-gradient(top left, rgba(247, 202, 201, 1) 0%, rgba(146, 168, 209, 1) 100%);
-   background: linear-gradient(to bottom right, rgba(247, 202, 201, 1) 0%, rgba(146, 168, 209, 1) 100%);
-   text-align: center;
-   height: 100px;
-   width: 100px;
-   position: absolute;
-   margin: auto;
-   top: 0px;
-   bottom: 0px;
-   left: 0px;
-   right: 0px;
-   border-radius: 50%;
-   border-style: double;
-   border-color: #c87f8a;
-   border-width: 5px;
+	background: -webkit-linear-gradient(top left, rgba(247, 202, 201, 1) 0%, rgba(146, 168, 209, 1) 100%);
+	background: -o-linear-gradient(top left, rgba(247, 202, 201, 1) 0%, rgba(146, 168, 209, 1) 100%);
+	background: linear-gradient(to bottom right, rgba(247, 202, 201, 1) 0%, rgba(146, 168, 209, 1) 100%);
+	text-align: center;
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	margin: auto;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	border-radius: 50%;
+	border-style: double;
+	border-color: #c87f8a;
+	border-width: 5px;
 }
 
 #floatFunixMenu #menu {
-   height: 100px;
-   width: 100px;
-   transform: scale(0);
-   position: absolute;
-   margin: auto;
-   top: 0px;
-   bottom: 0px;
-   left: 0px;
-   right: 0px;
-   z-index: -1;
-   transition: 0.7s;
+	height: 100px;
+	width: 100px;
+	transform: scale(0);
+	position: absolute;
+	margin: auto;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	z-index: -1;
+	transition: 0.7s;
 }
 
 #floatFunixMenu a {
-   display: inline-block;
-   position: absolute;
-   font-size: 13px;
-   color: #BBBBBB;
+	display: inline-block;
+	position: absolute;
+	font-size: 13px;
+	color: #BBBBBB;
 }
 
 #floatFunixMenu a:nth-child(1) {
-   top: 6px;
-   left: 45px;
+	top: 6px;
+	left: 45px;
 }
 
 #floatFunixMenu a:nth-child(2) {
-   top: 24px;
-   left: 77px;
+	top: 24px;
+	left: 77px;
 }
 
 #floatFunixMenu a:nth-child(3) {
-   top: 58px;
-   left: 76px;
+	top: 58px;
+	left: 76px;
 }
 
 #floatFunixMenu a:nth-child(4) {
-   top: 78px;
-   left: 42px;
+	top: 78px;
+	left: 42px;
 }
 
 #floatFunixMenu a:nth-child(5) {
-   top: 58px;
-   left: 10px;
+	top: 58px;
+	left: 10px;
 }
 
 #floatFunixMenu a:nth-child(6) {
-   top: 23px;
-   left: 12px;
+	top: 23px;
+	left: 12px;
 }
 
 #floatFunixMenu a:hover {
-   color: #c87f8a;
+	color: #c87f8a;
 }
 
-#floatFunixMenu #plus{
-   width: 80px;
-   height: 80px;
-   text-align: center;
-   margin-top: 5px;
-   transition: 0.7s;
+#floatFunixMenu #plus {
+	width: 80px;
+	height: 80px;
+	text-align: center;
+	margin-top: 5px;
+	transition: 0.7s;
 }
 
-#floatFunixMenu a i{
-   border: 1px solid black;
+#floatFunixMenu a i {
+	border: 1px solid black;
 }
 
 #floatFunixMenu .FunixTooltip .FunixTooltiptext {
-   visibility: hidden;
-   font-size: 6px;
-   font-family: sans-serif;
-   width: 120px;
-   background-color: #555;
-   color: #fff;
-   text-align: center;
-   border-radius: 6px;
-   padding: 3px 0;
-   position: absolute;
-   z-index: 1;
-   bottom: 125%;
-   left: 50%;
-   margin-left: -60px;
-   opacity: 0;
-   transition: opacity 0.3s;
+	visibility: hidden;
+	font-size: 6px;
+	font-family: sans-serif;
+	width: 120px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 3px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -60px;
+	opacity: 0;
+	transition: opacity 0.3s;
 }
 
 #floatFunixMenu .FunixTooltip .FunixTooltiptext::after {
-   content: "";
-   position: absolute;
-   top: 100%;
-   left: 50%;
-   margin-left: -5px;
-   border-width: 5px;
-   border-style: solid;
-   border-color: #555 transparent transparent transparent;
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
 }
 
 #floatFunixMenu .FunixTooltip:hover .FunixTooltiptext {
-   visibility: visible;
-   opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }

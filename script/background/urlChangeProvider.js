@@ -3,7 +3,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
 		// Emit event to current tab
 		chrome.tabs.sendMessage(tabId, {
 			type: 'tab-url-updated',
-			url: changeInfo.url
+			url: changeInfo.url,
 		});
 	}
 });

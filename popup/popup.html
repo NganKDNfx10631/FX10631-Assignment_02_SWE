@@ -1,37 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+	<head>
+		<title>FUNiX Translation Tool Menu</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="normalize.min.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link
+			href="https://fonts.googleapis.com/css?family=Orbitron&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
 
-<head>
-   <title>FUNiX Translation Tool Menu</title>
-   <meta charset="utf-8" />
-   <link rel="stylesheet" href="normalize.min.css">
-   <link rel="stylesheet" href="style.css">
-   <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
-</head>
-
-<body>
-   <h1>FUNiX Passport</h1>
-   <div class="container" style="z-index:1000;position:relative;">
-      <p class="title">Select Translation Mode:</p>
-      <select name="" id="cusSelectbox">
-         <!-- <option value="0">Auto enable subtitle if supported.</option> -->
-         <option value="0">Enable if subtitle supported.</option>
-         <option value="1">Do not enable if subtitle supported.</option>
-      </select>
-   </div>
-   <div class="container" id="floating">
-      <p class="title">Floating window</p>
-      <input id="toggle-on" class="toggle toggle-left" name="toggle" value="false" type="radio">
-      <label for="toggle-on" class="btn">Enable</label>
-      <input id="toggle-off" class="toggle toggle-right" name="toggle" value="true" type="radio">
-      <label for="toggle-off" class="btn">Disable</label>
-   </div>
-   <div class="container">
-      <p>Make with <a style="color:red;">&#10084;</a> by FPT Software</p>
-      <p class="version"></p>
-   </div>
-   <script src="../script/libary/jquery.js"></script>
-   <script src="popup.js"></script>
-</body>
-
+	<body>
+		<h1>FUNiX Passport</h1>
+		<div class="container" style="z-index: 1000; position: relative">
+			<p class="title">Select Translation Mode:</p>
+			<select name="" id="cusSelectbox">
+				<!-- <option value="0">Auto enable subtitle if supported.</option> -->
+				<option value="0">Enable if subtitle supported.</option>
+				<option value="1">Do not enable if subtitle supported.</option>
+			</select>
+		</div>
+		<div class="container" id="floating">
+			<p class="title">Floating window</p>
+			<input
+				id="toggle-on"
+				class="toggle toggle-left"
+				name="toggle"
+				value="false"
+				type="radio"
+			/>
+			<label for="toggle-on" class="btn">Enable</label>
+			<input
+				id="toggle-off"
+				class="toggle toggle-right"
+				name="toggle"
+				value="true"
+				type="radio"
+			/>
+			<label for="toggle-off" class="btn">Disable</label>
+		</div>
+		<div class="container">
+			<p>Make with <a style="color: red">&#10084;</a> by FPT Software</p>
+			<p class="version"></p>
+		</div>
+		<script src="../script/libary/jquery.js"></script>
+		<script src="popup.js"></script>
+	</body>
 </html>
